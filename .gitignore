@@ -8,4 +8,5 @@ public/javascripts/app.min.js
 lib/restler
 db/*
 data/*
-
+*~
+.shell_history
