@@ -1,4 +1,11 @@
+Introduction
+============
 Prototype playground for data storage service.
+
+HTTP API for storing a variety of data types.
+
+Installation
+============
 
 > install node 10
 > install monogodb
