@@ -32,7 +32,7 @@ describe('Test', function(){
                 });                
                 res.on ('end', function () {
                     var text = data.join ('');
-                    var value = text.indexOf ('DOCTYPE') > -1;
+                    var value = text.indexOf ('doctype html') > -1;
                     tutil.assert.equal (true, value);
                     done ();
                 });

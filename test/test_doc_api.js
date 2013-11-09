@@ -21,16 +21,19 @@ describe('Test Document API: ', function(){
      */
     describe ('Verify REST document persistence API: ', function () {
         it ('should write a document', function (done) {
-            tutil.rest.post (tutil.conf.app.url + '/document/add', {
-                data: {
+
+	    var args = {
+		data : {
                     content  : 'a b c'
                 }
-            }).on ('complete', function (data, response) {
-                //console.log (data);
-                done ();
-            }).on ('fail', function (err) {
-                tutil.assert.true (false);
-            });
+	    };
+
+	    tutil.rest.post (tutil.conf.app.url + '/document/add', args, function (data, response) {
+		done ();
+	    }).on ('error', function (err) {
+		tutil.assert.true (false);
+	    });
+
         });
     });
     
