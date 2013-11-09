@@ -1,6 +1,5 @@
 var assert = require("assert");
 var http = require("http");
-//var rest = require ('restler');
 var Client = require('node-rest-client').Client;
 
 var server = require ('../lib/server');
@@ -10,7 +9,7 @@ var logger = core.logging.getLogger ('tests');
 var tutil = {
     assert   : assert,
     http     : http,
-    rest     : new Client (),
+    rest     : core.rest, //new Client (),
     conf     : {
         embedded : false, //true,
         app : {
