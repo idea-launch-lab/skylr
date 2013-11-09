@@ -1,0 +1,11 @@
+[
+    {
+	"name"       : "las-instrumentation-storage-api",
+	"script"     : "app.js",
+	"instances"  : "3",
+	"error_file" : "../../var/storage_err.log",
+	"out_file"   : "../../var/storage_out.log",
+	"exec_mode"  : "cluster_mode",
+	"port"       : 3000
+    }
+]
