@@ -21,16 +21,20 @@ describe('Test Graph API: ', function(){
      */
     describe ('Verify REST graph persistence API: ', function () {
         it ('should write a graph node', function (done) {
-            tutil.rest.post (tutil.conf.app.url + '/graph/add', {
-                data: {
+
+	    var args = {
+		data : {
                     content  : 'a b c'
                 }
-            }).on ('complete', function (data, response) {
+	    };
+
+	    tutil.rest.post (tutil.conf.app.url + '/graph/add', args, function (data, response) {
                 console.log (data);
-                done ();
-            }).on ('fail', function (err) {
-                tutil.assert.true (false);
-            });
+		done ();
+	    }).on ('error', function (err) {
+		tutil.assert.true (false);
+	    });
+
         });
     });
     

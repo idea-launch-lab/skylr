@@ -21,17 +21,23 @@ describe('Test File API', function(){
      */
     describe ('Verify REST file persistence API', function () {
         it ('should write a file', function (done) {
-            tutil.rest.post (tutil.conf.app.url + '/file/add', {
-                multipart: true,
-                data: {
-                    filename : 'text.txt',
-                    content  : 'a b c'
+
+	    var args = {
+		data : {
+		    multipart : true,
+		    data : {
+			filename : 'text.txt',
+			content  : 'a b c'
+		    }
                 }
-            }).on ('complete', function (data, response) {
-                done ();
-            }).on ('fail', function (err) {
-                tutil.assert.true (false);
-            });
+	    };
+
+	    tutil.rest.post (tutil.conf.app.url + '/file/add', args, function (data, response) {
+                console.log (data);
+		done ();
+	    }).on ('error', function (err) {
+		tutil.assert.true (false);
+	    });
         });
     });
     

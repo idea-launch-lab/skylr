@@ -20,10 +20,8 @@ var logger = core.logging.getLogger ('server');
 
 var app = express();
 
-var port = process.env.PORT || core.config.port;
-
 // all environments
-app.set('port', port);
+app.set('port', process.env.PORT || core.config.port);
 app.set('views', __dirname + '/../views');
 //app.set('view engine', 'jade');
 app.engine('html', swig.renderFile);
@@ -65,8 +63,8 @@ this.server = http.createServer (app);
 this.app = app;
 
 module.exports.listen = function () {
-    this.server.listen (port,  function () {
-        logger.info ('System listening on port ' + port + '.');
+    this.server.listen (core.config.port,  function () {
+        logger.info ('System listening on port ' + core.config.port + '.');
     });
 };
 
