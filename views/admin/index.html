@@ -1,0 +1,27 @@
+{% extends '../layout.html' %}
+
+{% block content %}
+
+   <h2>LAS Instrumentation {{ title }}</h2>
+
+   <!-- When this element is clicked, hide the tooltip -->
+   <div id="eventList"
+	ng-app="instrumentationApp" ng-controller="eventController" ng-click="hideTooltip()">
+     <div class="tooltip" ng-click="$event.stopPropagation()" ng-show="showtooltip">
+       <input type="text" ng-model="value" />
+     </div>
+     <button id='go' ng-click='go ()'>Add</button>
+
+     <ul class='eventList'>
+       <li ng-repeat="item in items">
+	 <div class='eventId'>[[ item.id ]]</div>
+	 <div class='eventData'>[[ item.data ]]</div>
+	 <div class='eventDetails'>[[ item.details ]]</div>
+       </li></br>
+     </ul>
+<!--
+     <p ng-click="toggleTooltip($event)">[[ value ]]</p>
+-->
+   </div>   
+
+{% endblock %}
