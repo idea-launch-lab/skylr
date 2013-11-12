@@ -1,4 +1,5 @@
 var tutil = require ('./tutil');
+var request = require ('request');
 
 /**
  * Test public file persistence API.
@@ -21,24 +22,52 @@ describe('Test File API', function(){
      */
     describe ('Verify REST file persistence API', function () {
         it ('should write a file', function (done) {
+	    tutil.core.request.post ({
+		uri    : tutil.conf.app.url + '/file/add',
+		form   :  {
+		    filename : 'text.txt',
+		    content  : 'a b c'
+		}
+	    }, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+                    console.log ("--> " + body);
+		    done ();
+		} else {
+		    tutil.assert.fail (error, "expected: ok status. got " + error);
+		}
+	    });
+	});
+    });
+    
+});
 
+
+/*
+
+request({
+  uri: "http://www.cjihrig.com/development/php/hello_form.php",
+  method: "POST",
+  form: {
+    name: "Bob"
+  }
+}, function(error, response, body) {
+  console.log(body);
+});
+*/
+/*
 	    var args = {
 		data : {
-		    multipart : true,
-		    data : {
-			filename : 'text.txt',
-			content  : 'a b c'
-		    }
-                }
+		    filename : 'text.txt',
+		    content  : 'a b c'
+		}
 	    };
 
 	    tutil.rest.post (tutil.conf.app.url + '/file/add', args, function (data, response) {
                 console.log (data);
 		done ();
 	    }).on ('error', function (err) {
-		tutil.assert.true (false);
+		console.log (err);
+		tutil.assert.fail (err, "expected: ok status");
 	    });
         });
-    });
-    
-});
+*/

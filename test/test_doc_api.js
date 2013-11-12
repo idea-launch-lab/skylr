@@ -21,20 +21,20 @@ describe('Test Document API: ', function(){
      */
     describe ('Verify REST document persistence API: ', function () {
         it ('should write a document', function (done) {
-
-	    var args = {
-		data : {
+	    tutil.core.request.post ({
+		uri : tutil.conf.app.url + '/document/add',
+		form : {
                     content  : 'a b c'
                 }
-	    };
-
-	    tutil.rest.post (tutil.conf.app.url + '/document/add', args, function (data, response) {
-		done ();
-	    }).on ('error', function (err) {
-		tutil.assert.true (false);
+	    }, function (error, response, body) {
+		if (!error && response.statusCode == 200) {		    
+                    console.log ("\n --> " + body);
+		    done ();
+		} else {
+		    tutil.assert.fail (error, "expected: ok status. got " + error);
+		}
 	    });
-
+				     
         });
     });
-    
 });

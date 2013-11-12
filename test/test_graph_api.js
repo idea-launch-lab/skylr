@@ -22,19 +22,19 @@ describe('Test Graph API: ', function(){
     describe ('Verify REST graph persistence API: ', function () {
         it ('should write a graph node', function (done) {
 
-	    var args = {
-		data : {
+	    tutil.core.request.post ({
+		uri : tutil.conf.app.url + '/graph/add',
+		form : {
                     content  : 'a b c'
                 }
-	    };
-
-	    tutil.rest.post (tutil.conf.app.url + '/graph/add', args, function (data, response) {
-                console.log (data);
-		done ();
-	    }).on ('error', function (err) {
-		tutil.assert.true (false);
+	    }, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+                    console.log ("--> " + body);
+		    done ();
+		} else {
+		    tutil.assert.fail (error, "Expected nominal response. Got: " + tutil.core.util.inspect (body));
+		}
 	    });
-
         });
     });
     

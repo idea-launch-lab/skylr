@@ -1,6 +1,18 @@
 /*global todomvc, angular */
 'use strict';
 
+instrumentationApp.factory ('instrumentationService', function ($http) {
+   return {
+        sendEvent: function () {
+             return $http.get ('/file/add')
+                       .then (function (result) {
+                            return ''; //result.data;
+                        });
+        }
+   }
+});
+
+
 /**
  * The main controller for the app. The controller:
  * - retrieves and persists the model via the todoStorage service

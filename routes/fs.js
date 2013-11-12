@@ -16,11 +16,14 @@ logger.info ('Initializing file storage adapter.');
  */
 exports.add = function (request, response) {
     request.assert ('filename', 'Filename required').notEmpty ().isAlpha ();
+    
     var fileName = request.body.filename;
+    core.util.debug ("request: " + core.util.inspect (request.body));
+
     var file = core.config.file.root + '/' + fileName;
     try {
 	fs.writeFileSync (file, request.body.content, 'utf8');
-	response.send ('', 200);
+	response.send ('ok', 200);
     } catch (e) {
 	response.send ("failed", 500);
         throw e;
