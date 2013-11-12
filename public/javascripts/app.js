@@ -14,4 +14,3 @@ var instrumentationApp =
 			$interpolateProvider.startSymbol ('[[');
 			$interpolateProvider.endSymbol (']]');
 		    });
-
