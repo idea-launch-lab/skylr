@@ -11,13 +11,13 @@
        <input type="text" ng-model="value" />
      </div>
 
-     <button id='go' ng-click='go ()'>Add</button>
+     <button id='go' ng-click='addFile ()'>Add</button>
 
      <ul class='eventList'>
-       <li ng-repeat="item in items" ng-class="{ topMessage : $first }"> 
-	 <div class='eventId'>[[ item.id ]]</div>
-	 <div class='eventData'>[[ item.data ]]</div>
-	 <div class='eventDetails'>[[ item.details ]]</div>
+       <li ng-repeat="message in messages" ng-class="{ topMessage : $first }"> 
+	 <div class='eventId'>[[ message.id ]]</div>
+	 <div class='eventData'>[[ message.date ]]</div>
+	 <div class='eventDetails'>[[ message.filename ]]</div>
        </li></br>
      </ul>
 

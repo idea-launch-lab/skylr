@@ -5,6 +5,7 @@
 #*#
 */#*#
 bower_components*
+public/components
 npm-debug.log
 node_modules/
 public/javascripts/app.min.js
