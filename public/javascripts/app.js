@@ -14,7 +14,10 @@ var instrumentationApp =
 		    function ($interpolateProvider) {
 			$interpolateProvider.startSymbol ('[[');
 			$interpolateProvider.endSymbol (']]');
-		    });
+		    }).
+    config (function ($logProvider) {
+	$logProvider.debugEnabled (false);
+    });
 
 angular.element(document).ready (function() {
     initChart ();

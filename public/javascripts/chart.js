@@ -41,7 +41,7 @@ function initHost (hostId) {
 instrumentationApp.factory ('charts', function () {
     return { 
 	addData : function (i, time, value) {
-	    console.log ("cat " + i + "time "+  time + "value " +  value);
+	    //console.log ("cat " + i + "time "+  time + "value " +  value);
 	    dataSets[i].append(time, value);
 	}
     };

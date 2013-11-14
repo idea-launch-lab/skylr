@@ -11,7 +11,7 @@ function random(min, max)
  * - retrieves and persists the model via the todoStorage service
  * - exposes the model to the template and provides event handlers
  */
-instrumentationApp.controller ('eventController', function MessageController ($scope, dataService, socket, charts){
+instrumentationApp.controller ('eventController', function MessageController ($scope, $log, dataService, socket, charts){
     $scope.showtooltip = false;
     $scope.index = 0;
     $scope.value = '';
@@ -32,7 +32,7 @@ instrumentationApp.controller ('eventController', function MessageController ($s
 	} else if (message.code % 5 == 0) {
 	    category = 3;
 	}
-	//console.log ("incrementing value for category: " + category);
+	$log.debug ("incrementing value for category: " + category);
 	var value = null;
 	if ($scope.messagesByCategory.hasOwnProperty (category)) {
 	    value = $scope.messagesByCategory [category];
@@ -47,13 +47,16 @@ instrumentationApp.controller ('eventController', function MessageController ($s
 	for (var c = 0; c < $scope.latestMessages.length; c++) {
 	    $scope.categorizeMessage ($scope.latestMessages [c]);
 	}
+	time = time - 1000 ;
 	for (var key in $scope.messagesByCategory) {
 	    var value = $scope.messagesByCategory [key];
-	    charts.addData (key, time, value * 1000); 
+	    charts.addData (key, time, value * 10000); 
 	}
 
-	$scope.latestMessages.length = random ($scope.latestMessages.length / 8,
+	$scope.latestMessages.length = 0; 
+	/*random ($scope.latestMessages.length / 8,
 					       $scope.latestMessages.length);// = []; //.length = 0;
+					       */
 	$scope.messagesByCategory = {};
     };
     setInterval(function() {
