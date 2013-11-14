@@ -4,7 +4,7 @@
 
 // http://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
 
-var socket = io.connect('http://scox.europa.renci.org:3000');
+var socket = io.connect('http://scox.europa.renci.org:3000'); // todo
 
 instrumentationApp.factory ('socket', function ($rootScope) {
   var socket = io.connect();

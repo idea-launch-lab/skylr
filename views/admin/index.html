@@ -7,11 +7,10 @@
    <!-- When this element is clicked, hide the tooltip -->
    <div id="eventList" ng-app="instrumentationApp" ng-controller="eventController" ng-click="hideTooltip()">
 
-     <div class="tooltip" ng-click="$event.stopPropagation()" ng-show="showtooltip">
-       <input type="text" ng-model="value" />
-     </div>
+     <canvas id="host1Cpu" class="throughputChart" ></canvas>
 
-     <button id='go' ng-click='addFile ()'>Add</button>
+<!--     <button id='go' ng-click='addFile ()'>Add</button> -->
+     <button id='go' ng-click='toggleMessageLoop ()'>Add</button> 
 
      <ul class='eventList'>
        <li ng-repeat="message in messages" ng-class="{ topMessage : $first }"> 
