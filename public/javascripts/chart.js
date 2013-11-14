@@ -1,5 +1,5 @@
 function initChart () {
-  initHost ('host1');
+  initHost ('messageThroughputChart');
 }
 
 var seriesOptions = [
@@ -35,7 +35,7 @@ function initHost (hostId) {
     }
     
     // Start the chart.
-    timeline.streamTo(document.getElementById(hostId + 'Cpu'), 100);
+    timeline.streamTo(document.getElementById(hostId), 100);
 }
 
 instrumentationApp.factory ('charts', function () {

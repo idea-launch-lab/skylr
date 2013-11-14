@@ -43,6 +43,12 @@ a {
 
 .throughputChart {
     padding-left : 40px;
-    width : 85%; //500px;
+    width : 85%;
     height : 150px;
  }
+
+#toggleLoop {
+    position : absolute;
+    left     : 29px;
+    top      : 80px;
+}
