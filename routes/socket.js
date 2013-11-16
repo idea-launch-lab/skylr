@@ -24,6 +24,12 @@ module.exports = function (socket) {
     });
 
     // broadcast a user's message to other users
+    socket.on('user:join', function (data) {
+	console.log ('--client connect ' + core.util.inspect (data));
+	socket.broadcast.emit('user:join', data);
+    });
+
+    // broadcast a user's message to other users
     socket.on('send:message', function (data) {
 	console.log ("---------------------> " + core.util.inspect (data));
 	socket.broadcast.emit('send:message', data);

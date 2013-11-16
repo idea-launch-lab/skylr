@@ -20,7 +20,11 @@
     "streamline": "~0.4.0",
     "winston": "0.7.2",
     "express-validator": "~0.8.0",
-    "socket.io": "~0.9.16"
+    "socket.io": "~0.9.16",
+    "selenium-webdriver": "~2.37.0",
+    "protractor": "~0.12.1",
+    "socket.io-client": "~0.9.16",
+    "should": "~2.1.0"
   },
   "devDependencies": {
     "expect.js": "~0.1.2",

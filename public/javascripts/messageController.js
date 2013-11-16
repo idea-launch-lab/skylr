@@ -52,11 +52,7 @@ instrumentationApp.controller ('eventController', function MessageController ($s
 	    var value = $scope.messagesByCategory [key];
 	    charts.addData (key, time, value * 10000); 
 	}
-
-	$scope.latestMessages.length = 0; 
-	/*random ($scope.latestMessages.length / 8,
-					       $scope.latestMessages.length);// = []; //.length = 0;
-					       */
+	$scope.latestMessages.length = 0;
 	$scope.messagesByCategory = {};
     };
     setInterval(function() {
@@ -68,7 +64,7 @@ instrumentationApp.controller ('eventController', function MessageController ($s
 	$scope.messageLoop = 
 	    setInterval(function() {
 		$scope.addFile ();
-	    }, Math.random (0, 100));
+	    }, 1000); //Math.random (0, 100));
     };
     $scope.stopMessageLoop = function () {
 	if ($scope.messageLoop != null) {

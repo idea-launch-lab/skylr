@@ -16,7 +16,8 @@ var tutil = {
             host : 'localhost',
             port : '3000',
             url  : null
-        }
+        },
+	pathToSeleniumJar : '/opt/las/app/selenium-server-standalone-2.37.0.jar'
     }
 };
 tutil.conf.app.url = 'http://' + tutil.conf.app.host + ':' + tutil.conf.app.port;

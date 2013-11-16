@@ -2,7 +2,6 @@
 /*jshint unused:false */
 'use strict';
 
-
 /**
  * The main LAS Instrumentation app module.
  *
@@ -18,7 +17,6 @@ var instrumentationApp =
     config (function ($logProvider) {
 	$logProvider.debugEnabled (false);
     });
-
 angular.element(document).ready (function() {
     initChart ();
 });
