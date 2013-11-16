@@ -4,7 +4,7 @@ var should = require ('should');
 
 var socketURL = 'http://0.0.0.0:3000';
 
-var options ={
+var options = {
   transports: [ 'websocket' ],
   'force new connection': true
 };
@@ -15,9 +15,9 @@ var chatUser3 = {'name':'Dana'};
 
 describe ("Socket Server",function () {
     it('Should broadcast new user to all users', function(done){
-	var client1 = io.connect(socketURL, options);
+	var client1 = io.connect (socketURL, options);
 
-	client1.on ('connect', function(data){
+	client1.on ('connect', function (data) {
 	    console.log ('--client1 connect');
 
 	    /* Since first client is connected, we connect the second client. */
@@ -25,13 +25,12 @@ describe ("Socket Server",function () {
 
 	    client1.emit ('user:join', chatUser1);
 
-
-	    client2.on('connect', function(data){
+	    client2.on ('connect', function (data) {
 		console.log ('--client2 connect');
 		client2.emit('user:join', chatUser2);
 	    });
 
-	    client2.on('user:join', function (usersName){
+	    client2.on ('user:join', function (usersName) {
 		console.log ('--client2->user:join: ' + util.inspect (usersName));
 		usersName.name.should.equal (chatUser2.name);
 		client2.disconnect();
@@ -40,13 +39,13 @@ describe ("Socket Server",function () {
 	});
 
 	var numUsers = 0;
-	client1.on('user:join', function(usersName){
+	client1.on ('user:join', function(usersName){
 	    numUsers += 1;
 
-	    if(numUsers === 2){
-		usersName.name.should.equal(chatUser2.name);
-		client1.disconnect();
-		done();
+	    if (numUsers === 2){
+		usersName.name.should.equal (chatUser2.name);
+		client1.disconnect ();
+		done ();
 	    }
 	});
     });

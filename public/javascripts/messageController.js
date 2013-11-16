@@ -1,18 +1,20 @@
 /*global todomvc, angular */
 'use strict';
 
-function random(min, max) 
-{ 
-   return Math.round(min + Math.random()*(max - min)) 
+function random (min, max) { 
+   return Math.round (min + Math.random () * (max - min)) 
 }
 
 /**
- * The main controller for the app. The controller:
- * - retrieves and persists the model via the todoStorage service
- * - exposes the model to the template and provides event handlers
+ * The event controller.
  */
-instrumentationApp.controller ('eventController', function MessageController ($scope, $log, dataService, socket, charts){
-    $scope.showtooltip = false;
+instrumentationApp.controller ('eventController', function MessageController ($scope,
+									      $log,
+									      dataService,
+									      socket,
+									      charts) {
+    
+    // event list
     $scope.index = 0;
     $scope.value = '';
     $scope.messages = [ ];
@@ -64,7 +66,7 @@ instrumentationApp.controller ('eventController', function MessageController ($s
 	$scope.messageLoop = 
 	    setInterval(function() {
 		$scope.addFile ();
-	    }, 1000); //Math.random (0, 100));
+	    }, Math.random (0, 100));
     };
     $scope.stopMessageLoop = function () {
 	if ($scope.messageLoop != null) {
@@ -110,7 +112,6 @@ instrumentationApp.controller ('eventController', function MessageController ($s
     });
 
     socket.on('send:message', function (message) {
-	//console.log (message);
 	$scope.addMessage (message);
     });
 

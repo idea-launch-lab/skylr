@@ -12,7 +12,7 @@ var seriesOptions = [
 var dataSets = null;
 
 // Set up the chart.
-function initHost (hostId) {
+function initHost (chartId) {
     
     // Initialize an empty TimeSeries for each CPU.
     dataSets = [new TimeSeries(), new TimeSeries(), new TimeSeries(), new TimeSeries()];
@@ -35,7 +35,7 @@ function initHost (hostId) {
     }
     
     // Start the chart.
-    timeline.streamTo(document.getElementById(hostId), 100);
+    timeline.streamTo(document.getElementById (chartId), 100);
 }
 
 instrumentationApp.factory ('charts', function () {

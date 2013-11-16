@@ -1,5 +1,31 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-   <h2>{{ title }}.</h2>
+
+   <h2>{{ title }}</h2>
+   <div id="eventList" ng-controller="eventController">
+
+     <button id='toggleLoop' ng-click='toggleMessageLoop ()'>Add</button>
+
+     <canvas id="messageThroughputChart" class="throughputChart"
+	     ng-show="messageLoop != null">
+     </canvas>
+
+     <ul class='eventList'>
+        <li>
+	  <div class='eventListHeader'>
+	    <div class='eventId'>ID</div>
+	    <div class='eventData'>Date</div>
+	    <div class='eventDetails'>File</div>
+	  </div>
+	  <div ng-repeat="message in messages" ng-class="{ topMessage : $first }">
+	    <div class='eventId'>[[message.id]]</div>
+	    <div class='eventData'>[[message.date]]</div>
+	    <div class='eventDetails'>[[message.filename]]</div>
+	  </div>
+       </li>
+     </ul>
+
+   </div>
+
 {% endblock %}

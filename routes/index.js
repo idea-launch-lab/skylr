@@ -5,8 +5,9 @@ var admin = require ('./admin');
  * GET home page.
  */
 
-exports.index = function(req, res){
-  res.render('index', { title: 'LAS Instrumentation - Event Service' });
+exports.index = function (request, response){
+  response.render ('index',
+		   { title: 'LAS Event Service' });
 };
 
 exports.admin = admin.index;

@@ -9,7 +9,7 @@
  */
 var instrumentationApp = 
     angular.module ('instrumentationApp',
-		    [],
+		    [ ],
 		    function ($interpolateProvider) {
 			$interpolateProvider.startSymbol ('[[');
 			$interpolateProvider.endSymbol (']]');
@@ -17,6 +17,7 @@ var instrumentationApp =
     config (function ($logProvider) {
 	$logProvider.debugEnabled (false);
     });
+
 angular.element(document).ready (function() {
     initChart ();
 });
