@@ -5,7 +5,7 @@ var tutil = require ('./tutil');
 
 var logger = tutil.core.logging.getLogger ('test_socket');
 
-var socketURL = 'http://0.0.0.0:3000';
+var socketURL = 'http://0.0.0.0:' + process.env.NODE_PORT;
 
 var options = {
   transports: [ 'websocket' ],
