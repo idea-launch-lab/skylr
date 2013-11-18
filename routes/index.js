@@ -10,4 +10,4 @@ exports.index = function (request, response){
 		   { title: 'LAS Event Service' });
 };
 
-exports.admin = admin.index;
+exports.admin = admin;

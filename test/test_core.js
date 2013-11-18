@@ -4,7 +4,7 @@ var tutil = require ('./tutil');
  * Unit tests.
  *
  */ 
-describe('Test', function(){
+describe('Test core functions', function(){
     
     before(function () {
         tutil.startApp ();
@@ -14,7 +14,7 @@ describe('Test', function(){
         tutil.stopApp ();
     });
     
-    describe ('GET /', function () {
+    describe ('Verify GET / returns valid HTML', function () {
         it ('should return a nominal HTTP status.', function () {
             tutil.http.get (tutil.conf.app.url, function (res) {
                 tutil.assert.equal (200, res.statusCode);

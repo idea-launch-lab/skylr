@@ -1,4 +1,5 @@
 var tutil = require ('./tutil');
+var logger = tutil.core.logging.getLogger ('test_graph_api');
 
 /**
  * Test public graph persistence API.
@@ -21,15 +22,16 @@ describe('Test Graph API: ', function(){
      */
     describe ('Verify REST graph persistence API: ', function () {
         it ('should write a graph node', function (done) {
-
-	    tutil.core.request.post ({
+	    logger.info ('');
+	    logger.info ('--sending post request to add graph node');
+	    tutil.rest.post ({
 		uri : tutil.conf.app.url + '/graph/add',
 		form : {
                     content  : 'a b c'
                 }
 	    }, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-                    console.log ("--> " + body);
+                    logger.info ('--graph:add() got nominal response: ' + body);
 		    done ();
 		} else {
 		    tutil.assert.fail (error, "Expected nominal response. Got: " + tutil.core.util.inspect (body));

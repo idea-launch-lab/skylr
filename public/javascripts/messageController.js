@@ -10,9 +10,42 @@ function random (min, max) {
  */
 instrumentationApp.controller ('eventController', function MessageController ($scope,
 									      $log,
+									      $http,
 									      dataService,
 									      socket,
 									      charts) {
+    var blankApp = {
+	name : '',
+	description : ''
+    };
+    var serviceUrl = '/api/admin/app/create';
+    $scope.appsEnabled = false;
+    $scope.newAppVisible = false;
+    $scope.apps = [ ];
+    $scope.newAppObj = null;
+    $scope.newApp = function () {
+    	$scope.newAppObj = angular.copy (blankApp);
+	$scope.newAppVisible = true;
+	$('#appName').required = true;
+    }
+    $scope.handleAppCreated = function (data, status) {
+	console.log (data);
+        $scope.apps.push (data);
+	$('#applicationTable').dataTable().fnAddData ([
+	    data.name,
+	    data._id,
+	    data.description,
+	    new Date (),
+	    '0.1'
+	]);
+    };
+    $scope.saveApp = function () {
+        $http.post (serviceUrl, $scope.newAppObj)
+            .success ($scope.handleAppCreated);
+	$('#appName').required = false;
+	$scope.newAppVisible = false;
+    };
+ 
     
     // event list
     $scope.index = 0;

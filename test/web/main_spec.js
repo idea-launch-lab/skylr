@@ -1,6 +1,6 @@
 describe('App intialization', function() {
     it('Should initialize the app.', function() {
-	browser.driver.get ('http://localhost:3000/admin');
+	browser.driver.get ('http://localhost:3000');
 
 	browser.findElement (by.css ('.throughputChart')).then (function (element) {
 	    console.log ("--found throughput chart");
@@ -35,7 +35,10 @@ describe('App intialization', function() {
 				row (0).column('[[message.id]]'));
 		fullMatch.getText ().then (function (text) {
 		    console.log ("--got row 0 id: " + text);
-		    expect(text).toEqual ('0');
+
+		    var number = parseInt (text);
+		    var positiveNumber = number > 0;
+		    expect(positiveNumber).toEqual (true);
 		});
 		
 	    });

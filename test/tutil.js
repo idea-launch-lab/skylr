@@ -1,14 +1,14 @@
 var assert = require("assert");
 var http = require("http");
-var request = require('request');
-
-var server = require ('../lib/server');
 var core = require ('../lib/core');
+var rest = require('../lib/rest');
+var server = require ('../lib/server');
 var logger = core.logging.getLogger ('tests');
 
 var tutil = {
     assert   : assert,
     http     : http,
+    rest     : rest,
     core     : core,
     conf     : {
         embedded : false, //true,

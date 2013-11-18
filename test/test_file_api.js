@@ -1,6 +1,5 @@
 var tutil = require ('./tutil');
-var request = require ('request');
-
+var logger = tutil.core.logging.getLogger ('test_file_api');
 /**
  * Test public file persistence API.
  */    
@@ -22,7 +21,9 @@ describe('Test File API', function(){
      */
     describe ('Verify REST file persistence API', function () {
         it ('should write a file', function (done) {
-	    tutil.core.request.post ({
+	    logger.info ('');
+	    logger.info ('--sending post request to add file.');
+	    tutil.rest.post ({
 		uri    : tutil.conf.app.url + '/file/add',
 		form   :  {
 		    filename : 'text.txt',
@@ -30,7 +31,7 @@ describe('Test File API', function(){
 		}
 	    }, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-                    console.log ("--> " + body);
+		    logger.info ('--file:add() got nominal response: ' + body);
 		    done ();
 		} else {
 		    tutil.assert.fail (error, "expected: ok status. got " + error);
@@ -42,32 +43,3 @@ describe('Test File API', function(){
 });
 
 
-/*
-
-request({
-  uri: "http://www.cjihrig.com/development/php/hello_form.php",
-  method: "POST",
-  form: {
-    name: "Bob"
-  }
-}, function(error, response, body) {
-  console.log(body);
-});
-*/
-/*
-	    var args = {
-		data : {
-		    filename : 'text.txt',
-		    content  : 'a b c'
-		}
-	    };
-
-	    tutil.rest.post (tutil.conf.app.url + '/file/add', args, function (data, response) {
-                console.log (data);
-		done ();
-	    }).on ('error', function (err) {
-		console.log (err);
-		tutil.assert.fail (err, "expected: ok status");
-	    });
-        });
-*/

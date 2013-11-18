@@ -4,28 +4,47 @@
 
    <h2>{{ title }}</h2>
    <div id="eventList" ng-controller="eventController">
-
-     <button id='toggleLoop' ng-click='toggleMessageLoop ()'>Add</button>
-
+     <button id="toggleLoop" ng-click="toggleMessageLoop ()">Add</button>
      <canvas id="messageThroughputChart" class="throughputChart"
 	     ng-show="messageLoop != null">
      </canvas>
-
-     <ul class='eventList'>
+     <ul class="eventList">
         <li>
-	  <div class='eventListHeader'>
-	    <div class='eventId'>ID</div>
-	    <div class='eventData'>Date</div>
-	    <div class='eventDetails'>File</div>
+	  <div class="eventListHeader">
+	    <div class="eventId">ID</div>
+	    <div class="eventData">Date</div>
+	    <div class="eventDetails">File</div>
 	  </div>
 	  <div ng-repeat="message in messages" ng-class="{ topMessage : $first }">
-	    <div class='eventId'>[[message.id]]</div>
-	    <div class='eventData'>[[message.date]]</div>
-	    <div class='eventDetails'>[[message.filename]]</div>
+	    <div class="eventId">[[message.id]]</div>
+	    <div class="eventData">[[message.date]]</div>
+	    <div class="eventDetails">[[message.filename]]</div>
 	  </div>
        </li>
      </ul>
 
+     <br></br>
+     <br></br>
+     <div ng-show="appsEnabled">
+       <button id="createApp" ng-click="newApp ()">Add Application</button>
+       <div ng-show="newAppVisible">
+	 <form novalidate>
+	   
+	   <label>Name:</label>
+	   <input type="text" ng-model="newAppObj.name" name="app-name" required />
+
+	   <label>Description:</label>
+	   <input type="text" ng-model="newAppObj.description" name="app-description" />
+
+	   <input type="submit" value="Save" ng-click="saveApp ()" />
+	 </form>
+       </div>
+       <table id="applicationTable" cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
+       </table>
+     </div>
+
+
    </div>
+
 
 {% endblock %}

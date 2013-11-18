@@ -20,4 +20,20 @@ var instrumentationApp =
 
 angular.element(document).ready (function() {
     initChart ();
+    x ();
 });
+
+function x () {
+$('#applicationTable').dataTable({
+    "aaData": [
+        [ "Default", "lkhaksjfkbnvakjhsd", "Default application", new Date (), "0.0.1" ]
+    ],
+    "aoColumns": [
+        { "sTitle": "Name" },
+        { "sTitle": "Identifier" },
+        { "sTitle": "Description" },
+        { "sTitle": "Created" },
+        { "sTitle": "Version" }
+    ]
+    });
+}

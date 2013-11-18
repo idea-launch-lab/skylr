@@ -1,5 +1,9 @@
 function initChart () {
-  initHost ('messageThroughputChart');
+    try {
+	initHost ('messageThroughputChart');
+    } catch (e) {
+	console.log ('unable to initialize chart');
+    }
 }
 
 var seriesOptions = [
@@ -41,7 +45,6 @@ function initHost (chartId) {
 instrumentationApp.factory ('charts', function () {
     return { 
 	addData : function (i, time, value) {
-	    //console.log ("cat " + i + "time "+  time + "value " +  value);
 	    dataSets[i].append(time, value);
 	}
     };
