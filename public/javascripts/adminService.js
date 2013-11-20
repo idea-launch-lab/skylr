@@ -21,6 +21,13 @@ LASApp.factory ('adminService', function ($http) {
 	 */
 	saveApp : function (obj, callback) {
             $http.post ('/api/admin/app/create', obj).success (callback);
+	},
+
+	/**
+	 * Save an application object.
+	 */
+	deleteApp : function (obj, callback) {
+            $http.post ('/api/admin/app/delete', obj).success (callback);
 	}
     }
 

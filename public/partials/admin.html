@@ -8,9 +8,6 @@
   <div class="sectionBody">
 
     <div> 
-<!--
-      <button id="createApp" ng-click="newApp ()">Add Application</button>
--->
 
       <div class="form" ng-show="newAppVisible">
 	<form novalidate>	  
@@ -28,11 +25,14 @@
 	<div class="cell" style="width:44%">Description</div>
 	<div class="cell" style="width:30%">Creation Date</div>
       </div>
+
       <div ui-if="loadingIsDone" ng-repeat="app in apps" ng-class="{ topApp : $first }">
 	<div class="cell" style="width:10%">[[app.id]]</div>
 	<div class="cell" style="width:10%">[[app.name]]</div>
 	<div class="cell" style="width:44%">[[app.description]]</div>
-	<div class="cell" style="width:30%">[[app.creationDate]]</div>
+	<div class="cell" style="width:30%">[[app.creationDate]]
+	  <img class="deleteIcon" src="images/delete-icon.png" ng-click="deleteApp($index)"/>
+	</div>
       </div>
 
     </div>

@@ -21,6 +21,14 @@ LASApp.controller ('adminController', function AdminController ($scope, adminSer
     // Initialize - load existing apps.
     adminService.getApps (function (apps) {
 	$scope.apps = apps;
+	for (var c = 0; c , apps.length; c++) {
+	    var app = apps [c];
+	    console.log (app);
+	    if (app === undefined)
+		break;
+	    app['id'] = app._id;
+	}
+	console.log (apps);
 	$scope.loadingIsDone = true;
     });
     
@@ -38,6 +46,13 @@ LASApp.controller ('adminController', function AdminController ($scope, adminSer
     $scope.saveApp = function () {
 	adminService.saveApp ($scope.newAppObj, $scope.handleAppCreated);
 	$scope.newAppVisible = false;
+    };
+
+    // Save a new app.
+    $scope.deleteApp = function (index) {
+	adminService.deleteApp ($scope.apps [index], function (result) {
+	    $scope.apps.splice (index, 1);
+	});
     };
 
     // Handle the response from creating an app.

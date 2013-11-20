@@ -18,6 +18,22 @@ exports.findApps = function (request, response) {
     });
 };
 
+exports.deleteApp = function (request, response) {
+    request.assert ('id', 'Application id required').notEmpty ().isAlpha ();
+    logger.info ("deleting application: " + request.body);
+    logger.info ("deleting application: " + request.body._id);
+    Application.findById (request.body._id, function (error, app) {
+	if (error) {
+	    response.send ('No such application', 404);
+	} else {
+	    app.remove (function (error, app) {
+		response.write (JSON.stringify ({ status : 'ok' }));
+		response.end ();
+	    });
+	}
+    });
+};
+
 exports.createApp = function (request, response) {
     request.assert ('name', 'Application name required').notEmpty ().isAlpha ();
     request.assert ('description', 'Application description required').notEmpty ().isAlpha ();
