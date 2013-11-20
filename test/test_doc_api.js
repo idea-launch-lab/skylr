@@ -25,7 +25,7 @@ describe('Test Document API: ', function(){
 	    logger.info ('');
 	    logger.info ('--sending post request to add document node.');
 	    tutil.rest.post ({
-		uri : tutil.conf.app.url + '/document/add',
+		uri : tutil.conf.app.url + '/api/data/document/add',
 		form : {
                     content  : 'a b c'
                 }

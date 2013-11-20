@@ -24,7 +24,7 @@ describe('Test File API', function(){
 	    logger.info ('');
 	    logger.info ('--sending post request to add file.');
 	    tutil.rest.post ({
-		uri    : tutil.conf.app.url + '/file/add',
+		uri    : tutil.conf.app.url + '/api/data/file/add',
 		form   :  {
 		    filename : 'text.txt',
 		    content  : 'a b c'

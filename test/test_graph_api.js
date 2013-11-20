@@ -25,7 +25,7 @@ describe('Test Graph API: ', function(){
 	    logger.info ('');
 	    logger.info ('--sending post request to add graph node');
 	    tutil.rest.post ({
-		uri : tutil.conf.app.url + '/graph/add',
+		uri : tutil.conf.app.url + '/api/data/graph/add',
 		form : {
                     content  : 'a b c'
                 }

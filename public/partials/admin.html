@@ -1,0 +1,40 @@
+<div>
+  <div class="sectionHead">
+    <h2>[[title]]</h2>
+    <div class="button" ng-click="newApp ()">Add Application</div>
+    </div>
+  </div>
+
+  <div class="sectionBody">
+
+    <div> 
+<!--
+      <button id="createApp" ng-click="newApp ()">Add Application</button>
+-->
+
+      <div class="form" ng-show="newAppVisible">
+	<form novalidate>	  
+	  <label>Name:</label>
+	  <input type="text" ng-model="newAppObj.name" name="app-name" required />
+	  <label>Description:</label>
+	  <input type="text" ng-model="newAppObj.description" name="app-description" />
+	  <input type="submit" value="Save" ng-click="saveApp ()" />
+	</form>
+      </div>
+      
+      <div class="tableHead">
+	<div class="cell" style="width:10%">ID</div>
+	<div class="cell" style="width:10%">Name</div>
+	<div class="cell" style="width:44%">Description</div>
+	<div class="cell" style="width:30%">Creation Date</div>
+      </div>
+      <div ui-if="loadingIsDone" ng-repeat="app in apps" ng-class="{ topApp : $first }">
+	<div class="cell" style="width:10%">[[app.id]]</div>
+	<div class="cell" style="width:10%">[[app.name]]</div>
+	<div class="cell" style="width:44%">[[app.description]]</div>
+	<div class="cell" style="width:30%">[[app.creationDate]]</div>
+      </div>
+
+    </div>
+  </div>
+</div>

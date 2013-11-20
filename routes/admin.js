@@ -6,8 +6,16 @@ var logger = core.logging.getLogger ('admin_route');
  * Admin controllers.
  */
 
-exports.index = function(req, res){
-  res.render('admin/index', { title: 'Admin' });
+exports.index = function (req, res) {
+	res.render('admin/index', { title: 'Admin' });
+};
+
+exports.findApps = function (request, response) {
+    logger.info ("finding applications.");
+    Application.find (function (error, apps) {
+	response.write (JSON.stringify (apps));
+	response.end ();
+    });
 };
 
 exports.createApp = function (request, response) {
@@ -18,11 +26,9 @@ exports.createApp = function (request, response) {
 	description : request.body.description
     });
     application.save (function (error, app) {
-	//response.send (app, 200);
-	response.write (JSON.stringify (app));
+	    response.write (JSON.stringify (app));
 	response.end ();
-
+	
     });
     logger.info ("saved application: " + core.util.inspect (application));
 };
-

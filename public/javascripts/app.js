@@ -2,14 +2,18 @@
 /*jshint unused:false */
 'use strict';
 
+function random (min, max) { 
+   return Math.round (min + Math.random () * (max - min)) 
+}
+
 /**
  * The main LAS Instrumentation app module.
  *
  * @type {angular.Module}
  */
-var instrumentationApp = 
-    angular.module ('instrumentationApp',
-		    [ ],
+var LASApp = 
+    angular.module ('LASApp',
+		    [ 'ngRoute' ],
 		    function ($interpolateProvider) {
 			$interpolateProvider.startSymbol ('[[');
 			$interpolateProvider.endSymbol (']]');
@@ -18,22 +22,21 @@ var instrumentationApp =
 	$logProvider.debugEnabled (false);
     });
 
-angular.element(document).ready (function() {
-    initChart ();
-    x ();
-});
-
-function x () {
-$('#applicationTable').dataTable({
-    "aaData": [
-        [ "Default", "lkhaksjfkbnvakjhsd", "Default application", new Date (), "0.0.1" ]
-    ],
-    "aoColumns": [
-        { "sTitle": "Name" },
-        { "sTitle": "Identifier" },
-        { "sTitle": "Description" },
-        { "sTitle": "Created" },
-        { "sTitle": "Version" }
-    ]
-    });
-}
+LASApp.config (['$routeProvider', function ($routeProvider) {
+    $routeProvider.
+	when ('/admin', {
+            templateUrl : 'partials/admin.html',
+            controller  : 'adminController'
+	}).
+	when ('/monitor', {
+            templateUrl : 'partials/monitor.html',
+            controller  : 'monitorController'
+	}).
+	when ('/analytics', {
+            templateUrl : 'partials/analytics.html',
+            controller  : 'analyticsController'
+	}).
+	otherwise({
+            redirectTo: '/'
+	});
+}]);

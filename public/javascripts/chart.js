@@ -1,16 +1,8 @@
-function initChart () {
-    try {
-	initHost ('messageThroughputChart');
-    } catch (e) {
-	console.log ('unable to initialize chart');
-    }
-}
-
 var seriesOptions = [
-  { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.1)', lineWidth: 3 },
-  { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.1)', lineWidth: 3 },
-  { strokeStyle: 'rgba(0, 0, 255, 1)', fillStyle: 'rgba(0, 0, 255, 0.1)', lineWidth: 3 },
-  { strokeStyle: 'rgba(255, 255, 0, 1)', fillStyle: 'rgba(255, 255, 0, 0.1)', lineWidth: 3 }
+    { strokeStyle: 'rgba(255, 0, 0, 1)', fillStyle: 'rgba(255, 0, 0, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(0, 0, 255, 1)', fillStyle: 'rgba(0, 0, 255, 0.1)', lineWidth: 3 },
+    { strokeStyle: 'rgba(255, 255, 0, 1)', fillStyle: 'rgba(255, 255, 0, 0.1)', lineWidth: 3 }
 ];
 
 var dataSets = null;
@@ -42,7 +34,7 @@ function initHost (chartId) {
     timeline.streamTo(document.getElementById (chartId), 100);
 }
 
-instrumentationApp.factory ('charts', function () {
+LASApp.factory ('charts', function () {
     return { 
 	addData : function (i, time, value) {
 	    dataSets[i].append(time, value);

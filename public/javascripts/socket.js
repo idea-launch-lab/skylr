@@ -2,7 +2,7 @@
 /*jshint unused:false */
 'use strict';
 
-instrumentationApp.factory ('socket', function ($rootScope) { 
+LASApp.factory ('socket', function ($rootScope) { 
     var socket = io.connect ();
     return {
 	on: function (eventName, callback) {

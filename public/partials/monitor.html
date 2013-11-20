@@ -1,0 +1,30 @@
+<div id="eventList" ng-controller="monitorController">
+
+  <div class="sectionHead">
+    <h2>[[title]]</h2>
+  </div>
+
+  <div class="sectionBody">
+<!--
+    <button id="toggleLoop" ng-click="toggleMessageLoop ()">Add</button>
+    <canvas id="messageThroughputChart" class="throughputChart" ng-show="messageLoop != null"></canvas>
+-->
+    <canvas id="messageThroughputChart" class="throughputChart"></canvas>
+
+    <ul class="eventList">
+      <li>
+	<div class="tableHead">
+	  <div class="cell" style="width:10%">Event ID</div>
+	  <div class="cell" style="width:20%">Date</div>
+	  <div class="cell" style="width:66%">Content</div>
+	</div>
+	<div ng-repeat="message in messages" ng-class="{ topMessage : $first }">
+	  <div class="eventId">[[message.id]]</div>
+	  <div class="eventData">[[message.date]]</div>
+	  <div class="eventDetails">[[message.filename]]</div>
+	</div>
+      </li>
+    </ul>
+
+  </div>
+</div>
