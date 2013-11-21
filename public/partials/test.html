@@ -1,0 +1,24 @@
+<style>
+  .block {
+  background-color : green;
+  float : right;
+  padding : 55px;
+  color : white;
+  }
+  .selected {
+  opacity : 0.6;
+  }
+</style>
+<div>
+  <div class="sectionHead">
+    <h2>[[title]]</h2>
+    <div class="button" ng-click="toggleMessageLoop ()">Begin Simulation</div>
+  </div>
+  <div>
+    <div id="block1" class="block" ng-class="{ selected: 1 === category}">One</div>
+    <div id="block2" class="block" ng-class="{ selected: 2 === category}">Two</div>
+    <div id="block3" class="block" ng-class="{ selected: 3 === category}">Three</div>
+    <div id="block4" class="block" ng-class="{ selected: 4 === category}">Four</div>
+    <div id="block5" class="block" ng-class="{ selected: 5 === category}">Five</div>
+  </div>
+</div>

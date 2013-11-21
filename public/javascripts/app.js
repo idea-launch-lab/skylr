@@ -36,6 +36,10 @@ LASApp.config (['$routeProvider', function ($routeProvider) {
             templateUrl : 'partials/analytics.html',
             controller  : 'analyticsController'
 	}).
+	when ('/test', {
+            templateUrl : 'partials/test.html',
+            controller  : 'testController'
+	}).
 	otherwise({
             redirectTo: '/'
 	});

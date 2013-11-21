@@ -11,6 +11,19 @@
 -->
     <canvas id="messageThroughputChart" class="throughputChart"></canvas>
 
+      <table cellpadding="5" cellspacing="0" border="0" style="width: 100%">
+	<tr style="font-weight:bold;font-size: 18px; border-bottom : 1px solid black;">
+	  <td style="width:20%">ID</td>
+	  <td style="width:20%">Time</td>
+	  <td style="width:56%">Data</td>
+	</tr>
+	<tr ui-if="loadingIsDone" ng-repeat="message in messages" ng-class="{ topMessage : $first }" >
+	  <td style="width:20%">[[message.id]]</td>
+	  <td style="width:20%">[[message.date]]</td>
+	  <td style="width:56%">[[message.filename]]</td>
+	</tr>
+      </table>
+<!--
     <ul class="eventList">
       <li>
 	<div class="tableHead">
@@ -25,6 +38,7 @@
 	</div>
       </li>
     </ul>
+-->
 
   </div>
 </div>

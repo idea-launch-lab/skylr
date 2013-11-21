@@ -55,7 +55,7 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
 	for (var c = 0; c < $scope.latestMessages.length; c++) {
 	    $scope.categorizeMessage ($scope.latestMessages [c]);
 	}
-	time = time - 1000 ;
+	time = time - 1000;
 	for (var key in $scope.messagesByCategory) {
 	    var value = $scope.messagesByCategory [key];
 	    charts.addData (key, time, value * 10000); 
@@ -66,39 +66,6 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
     setInterval(function() {
 	$scope.chartMessages (new Date ().getTime ());
     }, 1000);
-
-    $scope.startMessageLoop = function () {
-	$scope.stopMessageLoop ();
-	$scope.messageLoop = 
-	    setInterval(function() {
-		$scope.addFile ();
-	    }, Math.random (0, 100));
-    };
-    $scope.stopMessageLoop = function () {
-	if ($scope.messageLoop != null) {
-	    clearInterval ($scope.messageLoop);
-	    $scope.messageLoop = null;
-	}
-    };
-    $scope.toggleMessageLoop = function () {
-	$scope.messageLoop === null ?
-	    $scope.startMessageLoop () :
-	    $scope.stopMessageLoop ();
-    };
-
-    $scope.addFile = function () {
-	var id = $scope.index++;
-	var message = {
-	    id       : id,
-	    code     : random (0, 10000),
-	    name     : $scope.name,
-	    date     : new Date (),
-	    filename : [ 'file-', id ].join (''),
-	    content  : $scope.value
-	};
-	dataService.addFile (message);
-	$scope.sendMessage (message);
-    };
 
     $scope.addMessage = function (message) {
 	$scope.messages.push (message);
