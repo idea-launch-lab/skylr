@@ -3,13 +3,15 @@ var Application = require ('../lib/model/application');
 var logger = core.logging.getLogger ('admin_route');
 
 /*
- * Admin controllers.
+ * Controllers for administrative functions.
  */
 
+// Get the main page.
 exports.index = function (req, res) {
 	res.render('admin/index', { title: 'Admin' });
 };
 
+// Find existing applications.
 exports.findApps = function (request, response) {
     logger.info ("finding applications.");
     Application.find (function (error, apps) {
@@ -18,9 +20,9 @@ exports.findApps = function (request, response) {
     });
 };
 
+// Delete an application.
 exports.deleteApp = function (request, response) {
     request.assert ('id', 'Application id required').notEmpty ().isAlpha ();
-    logger.info ("deleting application: " + request.body);
     logger.info ("deleting application: " + request.body._id);
     Application.findById (request.body._id, function (error, app) {
 	if (error) {
@@ -34,6 +36,7 @@ exports.deleteApp = function (request, response) {
     });
 };
 
+// Create an application.
 exports.createApp = function (request, response) {
     request.assert ('name', 'Application name required').notEmpty ().isAlpha ();
     request.assert ('description', 'Application description required').notEmpty ().isAlpha ();
@@ -42,9 +45,7 @@ exports.createApp = function (request, response) {
 	description : request.body.description
     });
     application.save (function (error, app) {
-	    response.write (JSON.stringify (app));
-	response.end ();
-	
+	response.end (JSON.stringify (app));
     });
     logger.info ("saved application: " + core.util.inspect (application));
 };

@@ -1,6 +1,8 @@
 var socket = require ('socket.io');
 var core = require ('../lib/core');
 
+var logger = core.logging.getLogger ('socket.io');
+/*
 var messageDB = {
     messages : [
 	{ id : 1, text : "a" },
@@ -9,14 +11,14 @@ var messageDB = {
 	{ id : 4, text : "d" }
     ]
 };
-
+*/
 // export function for listening to the socket
 module.exports = function (socket) {
     var name = "roger";
 
     // send the new user their name and a list of users
     console.log ("sending message db on init");
-    socket.emit('init', messageDB);
+    //socket.emit('init', messageDB);
 
     // notify other clients that a new user has joined
     socket.broadcast.emit('user:join', {
@@ -25,13 +27,13 @@ module.exports = function (socket) {
 
     // broadcast a user's message to other users
     socket.on('user:join', function (data) {
-	console.log ('--client connect ' + core.util.inspect (data));
-	socket.broadcast.emit('user:join', data);
+	logger.debug ('--socket->client_connect() %j', data);
+	socket.broadcast.emit ('user:join', data);
     });
 
     // broadcast a user's message to other users
     socket.on('send:message', function (data) {
-	console.log ("----(socket->broadcast(send:message)-----> " + core.util.inspect (data));
+	console.log ("--socket->broadcast(send:message) %j ", data);
 	socket.broadcast.emit('send:message', data);
     });
 

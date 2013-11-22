@@ -20,17 +20,16 @@ exports.add = function (request, response, sioClient) {
     var fileName = request.body.filename;
     var file = core.config.file.root + '/' + fileName;
 
-    logger.info ('--file->write(): ' + fileName);
-    logger.info ("request: " + core.util.inspect (request.body));
+    logger.info ('write: %s %j', fileName, request.body);
 
     // Write the file.
     fs.writeFile (file, request.body.content, function (err) {
 	if (err) { 
-	    logger.error ('--file->write(): ' + fileName);
+	    logger.error ('write(E): %s', fileName);
 	    response.end ();
 	    throw err;
 	} else {
-	    logger.info ('--file->write()->success: ' + fileName);
+	    logger.info ('write(S): %s', fileName);
 	    response.end ('ok');
 	}
     });
