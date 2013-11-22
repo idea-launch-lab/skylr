@@ -1,15 +1,7 @@
-var mongo  = require ('mongoskin')
-,   core   = require ('../lib/core');
+var core   = require ('../lib/core');
+var db = require ('../lib/mongodb');
 
-var logger = core.logging.getLogger ('document-db');
-
-// Set up the connection to the local db
-var options = { safe : true };
-var db = mongo.db (core.config.documentdb.url, options);
-db.bind (core.config.documentdb.defaultCollection);
-
-logger.info ('Initializing document database adapter.');
-logger.debug ('  --settings: ', core.util.inspect (options));
+var logger = core.logging.getLogger ('doc-db');
 
 /**
  * Add an object to the document data store.
@@ -20,16 +12,17 @@ logger.debug ('  --settings: ', core.util.inspect (options));
  * This method expects the following arguments:
  *    (a) @param {content} The content of the document.
  */
-exports.add = function (request, response) {
-    var doc = {
-        data : request.body.content
-    };
-    logger.debug ('document store writing: ' + core.util.inspect (doc));
-    var callback = function (err, result) {
-        if (err) throw err;
-        if (result) {
-            response.send (result[0]._id, 200);
-        }
-    };
-    db.collection.insert (doc, callback);
+exports.add = function (request, response, sioClient) {
+    var doc = { data : request.body.content };
+    logger.info ('--doc->write(): ' + core.util.inspect (doc));
+    db.getEvents ().insert (doc, function (err, obj) {
+	if (err) {
+	    logger.error (err);
+	    response.end ();
+	    throw err;
+	} else {
+	    logger.info ('--doc-wrote: ' + core.util.inspect (obj));
+	    response.end (JSON.stringify (obj));
+	}
+    });
 };

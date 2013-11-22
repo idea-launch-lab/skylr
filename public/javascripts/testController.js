@@ -4,7 +4,7 @@
 /**
  * Test controller - simulate a client application.
  */
-LASApp.controller ('testController', function TestController ($scope, dataService) {
+LASApp.controller ('testController', function TestController ($scope, dataService, socket) {
 
     // Controller data members.
     $scope.title = "App Simulator";
@@ -21,7 +21,7 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
 	$scope.messageLoop =
 	    setInterval (function() {
 		$scope.$apply ($scope.addFile ());
-	    }, 200); //Math.random (0, 1000));
+	    }, 10); //Math.random (0, 1000));
     };
 
     /**
@@ -38,6 +38,10 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
      * Toggle the message loop's running state.
      */
     $scope.toggleMessageLoop = function () {
+	/*
+	$scope.addFile ();
+    return;
+*/
 	$scope.messageLoop === null ?
 	    $scope.startMessageLoop () :
 	    $scope.stopMessageLoop ();
@@ -69,8 +73,9 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
 	    filename : [ 'file-', id ].join (''),
 	    content  : id
 	};
-	//dataService.addFile (message);
-	console.log ("dataService.addFile (message);");
+	dataService.addFile (message, socket);
+	//console.log ("dataService.addFile (message);");
+	console.log ("."); //dataService.addFile (message);");
 	// notify server side instead.
 	// $scope.sendMessage (message);
     };

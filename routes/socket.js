@@ -31,7 +31,7 @@ module.exports = function (socket) {
 
     // broadcast a user's message to other users
     socket.on('send:message', function (data) {
-	console.log ("---------------------> " + core.util.inspect (data));
+	console.log ("----(socket->broadcast(send:message)-----> " + core.util.inspect (data));
 	socket.broadcast.emit('send:message', data);
     });
 

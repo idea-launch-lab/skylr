@@ -5,11 +5,11 @@
  * The event controller.
  */
 LASApp.controller ('monitorController', function MonitorController ($scope,
-										$log,
-										$http,
-										dataService,
-										socket,
-										charts) {
+								    $log,
+								    $http,
+								    dataService,
+								    socket,
+								    charts) {
     $scope.title = "Monitoring";
     function initChart () {
 	try {
@@ -17,7 +17,7 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
 	} catch (e) {
 	    console.log ('unable to initialize chart');
 	}
-    }    
+    }
     initChart ();
     
     // event list
@@ -65,7 +65,7 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
     };
     setInterval(function() {
 	$scope.chartMessages (new Date ().getTime ());
-    }, 1000);
+    }, 100);
 
     $scope.addMessage = function (message) {
 	$scope.messages.push (message);
@@ -80,12 +80,18 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
     // Socket listeners
     // ================
 
-    socket.on('init', function (data) {
+    socket.on ('init', function (data) {
 	$scope.name = "awesome";
     });
 
     socket.on('send:message', function (message) {
-	$scope.addMessage (message);
+	console.log ('incoming. ' + message);
+	//console.log ('------------msg---> ' + message);
+	if (message !== null) {
+	    $scope.addMessage (message);
+	} else {
+	    console.log ('incoming. ' + message);
+	}
     });
 
     socket.on('user:join', function (data) {

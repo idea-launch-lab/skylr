@@ -1,5 +1,6 @@
 var tutil = require ('./tutil');
 var logger = tutil.core.logging.getLogger ('test_file_api');
+
 /**
  * Test public file persistence API.
  */    
@@ -25,7 +26,7 @@ describe('Test File API', function(){
 	    logger.info ('--sending post request to add file.');
 	    tutil.rest.post ({
 		uri    : tutil.conf.app.url + '/api/data/file/add',
-		form   :  {
+		form   : {
 		    filename : 'text.txt',
 		    content  : 'a b c'
 		}
