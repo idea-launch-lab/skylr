@@ -1,19 +1,11 @@
 var socket = require ('socket.io');
-var core = require ('../lib/core');
+var core   = require ('../lib/core');
 
 var logger = core.logging.getLogger ('socket.io');
-/*
-var messageDB = {
-    messages : [
-	{ id : 1, text : "a" },
-	{ id : 2, text : "b" },
-	{ id : 3, text : "c" },
-	{ id : 4, text : "d" }
-    ]
-};
-*/
+
 // export function for listening to the socket
 module.exports = function (socket) {
+
     var name = "roger";
 
     // send the new user their name and a list of users
@@ -35,6 +27,12 @@ module.exports = function (socket) {
     socket.on('send:message', function (data) {
 	console.log ("--socket->broadcast(send:message) %j ", data);
 	socket.broadcast.emit('send:message', data);
+    });
+
+    // broadcast a user's message to other users
+    socket.on('send:message:buf', function (data) {
+	console.log ("--socket->broadcast(send:message:buf) %j ", data);
+	socket.broadcast.emit('send:message:buf', data);
     });
 
     // clean up when a user leaves, and broadcast it to other users

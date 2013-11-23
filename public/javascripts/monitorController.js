@@ -8,7 +8,7 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
 								    $log,
 								    $http,
 								    dataService,
-								    socket,
+								    socketService,
 								    charts) {
     $scope.title = "Monitoring";
     function initChart () {
@@ -31,6 +31,8 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
     $scope.messageLoop = null;
     $scope.messagesByCategory = {};
     $scope.latestMessages = [];
+
+    // Assign a category to this message.
     $scope.categorizeMessage = function (message) {
 	var category = 0;
 	if (message.code % 3 == 0) {
@@ -51,6 +53,7 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
 	}
     };
 
+    // Put messages on the chart.
     $scope.chartMessages = function (time) {
 	for (var c = 0; c < $scope.latestMessages.length; c++) {
 	    $scope.categorizeMessage ($scope.latestMessages [c]);
@@ -63,10 +66,13 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
 	$scope.latestMessages.length = 0;
 	$scope.messagesByCategory = {};
     };
+
+    // Set the charting function to recur.
     setInterval(function() {
 	$scope.chartMessages (new Date ().getTime ());
     }, 100);
 
+    // Add a message.
     $scope.addMessage = function (message) {
 	$scope.messages.push (message);
 	if ($scope.messages.length > $scope.maxItemsLength) {
@@ -80,13 +86,11 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
     // Socket listeners
     // ================
 
-    socket.on ('init', function (data) {
+    socketService.on ('init', function (data) {
 	$scope.name = "awesome";
     });
 
-    socket.on('send:message', function (message) {
-	console.log ('incoming. ' + message);
-	//console.log ('------------msg---> ' + message);
+    socketService.on('send:message', function (message) {
 	if (message !== null) {
 	    $scope.addMessage (message);
 	} else {
@@ -94,12 +98,24 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
 	}
     });
 
-    socket.on('user:join', function (data) {
+    socketService.on('send:message:buf', function (message) {
+	if (message !== null) {
+	    var list = message.data;
+	    for (var c = 0; c < list.length; c++) {
+		var item = list [c];
+		console.log (item);
+
+		$scope.addMessage (item);
+	    }
+	}
+    });
+
+    socketService.on('user:join', function (data) {
 	$scope.users.push (data)
     });
 
     // add a message to the conversation when a user disconnects or leaves the room
-    socket.on('user:left', function (data) {
+    socketService.on('user:left', function (data) {
 	var i, user;
 	for (i = 0; i < $scope.users.length; i++) {
 	    user = $scope.users[i];
@@ -114,7 +130,7 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
     // ==============================
 
     $scope.sendMessage = function (message) {
-	socket.emit('send:message', message);
+	socketService.emit('send:message', message);
 
 	// add the message to our model locally
 	$scope.addMessage (message);

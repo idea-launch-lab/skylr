@@ -4,7 +4,7 @@
 /**
  * Test controller - simulate a client application.
  */
-LASApp.controller ('testController', function TestController ($scope, dataService, socket) {
+LASApp.controller ('testController', function TestController ($scope, dataService, socketService) {
 
     // Controller data members.
     $scope.title = "App Simulator";
@@ -12,6 +12,7 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
     $scope.running = false;
     $scope.index = 0;
     $scope.category = 0;
+    $scope.docDB = true;
 
     /**
      * Start the message loop.
@@ -20,8 +21,8 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
 	$scope.stopMessageLoop ();
 	$scope.messageLoop =
 	    setInterval (function() {
-		$scope.$apply ($scope.addFile ());
-	    }, 10); //Math.random (0, 1000));
+		$scope.$apply ($scope.sendMessage ());
+	    }, 10);
     };
 
     /**
@@ -38,10 +39,6 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
      * Toggle the message loop's running state.
      */
     $scope.toggleMessageLoop = function () {
-	/*
-	$scope.addFile ();
-    return;
-*/
 	$scope.messageLoop === null ?
 	    $scope.startMessageLoop () :
 	    $scope.stopMessageLoop ();
@@ -50,34 +47,35 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
     /**
      * Add a file.
      */
-    $scope.addFile = function () {
-	var id = $scope.index++;
+    $scope.sendMessage = function () {
+	var id = random (0, 1000000); //$scope.index++;
 
-	if (id % 3 == 0) {
-	    $scope.category = 1;
-	} else if (id % 4 == 0) {
-	    $scope.category = 2;
-	} else if (id % 8 == 0) {
+	if (id % 8 == 0) {
 	    $scope.category = 3;
 	} else if (id % 6 == 0) {
 	    $scope.category = 4;
 	} else if (id % 5 == 0) {
 	    $scope.category = 5;
+	} else if (id % 4 == 0) {
+	    $scope.category = 2;
+	} else if (id % 3 == 0) {
+	    $scope.category = 1;
 	}
 	
 	var message = {
 	    id       : id,
-	    code     : random (0, 10000),
+	    code     : id,
 	    name     : $scope.name,
 	    date     : new Date (),
 	    filename : [ 'file-', id ].join (''),
 	    content  : id
 	};
-	dataService.addFile (message, socket);
-	//console.log ("dataService.addFile (message);");
-	console.log ("."); //dataService.addFile (message);");
-	// notify server side instead.
-	// $scope.sendMessage (message);
+
+	if ($scope.docDB) {
+	    dataService.addEvent (message, socketService);
+	} else {
+	    dataService.addFile (message, socketService);
+	}
     };
 
 });
