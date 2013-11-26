@@ -177,12 +177,12 @@ a {
 #storageChannel {
     position : absolute;
     top      : 151px;
-    right    : 63px;
+    right    : 45px;
 }
 #storageChannelLabel {
     position : absolute;
     top      : 151px;
-    right    : 158px;
+    right    : 150px;
 } 
 
 .testBlock {

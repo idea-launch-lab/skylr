@@ -11,51 +11,20 @@ var fileEventStream = new BufferedEmitter ();
  */
 LASApp.factory ('dataService', function ($http) {
     return {
-
 	/**
-	 * Add a file.
+	 * Get a list of available storage channels.
 	 */
-	addFile: function (obj, socket) {
-	    return $http.post ('/api/data/file/add', obj)
-		.then (function (result) {
-		    // todo: batch these
-		    if (socket) {
-			socket.emit ('send:message', obj);
-		    }
-		    //fileEventStream.send (socket, 'send:message:buf', obj);
-		    return result;
-		});
+	getStorageChannels : function () {
+	    return [
+		{ name : 'File',        uri : '/api/data/file/add' },
+		{ name : 'Document',    uri : '/api/data/document/add' },
+		{ name : 'Kafka/Druid', uri : '/api/data/messageQ/add' } 
+	    ];
 	},
-
 	/**
-	 * Add an event.
+	 * Send an event to the given data channel (URI)
 	 */
-	addEvent: function (obj, socket) {
-	    return $http.post ('/api/data/document/add', obj)
-		.then (function (result) {
-		    // todo: batch these
-		    if (socket) {
-			socket.emit ('send:message', obj);
-		    }
-		    //eventStream.send (socket, 'send:message:buf', obj);
-		    return result;
-		});
-	},
-
-	/**
-	 * Add an event to the bus.
-	 */
-	addBusEvent: function (obj, socket) {
-	    return $http.post ('/api/data/kafka/add', obj)
-		.then (function (result) {
-		    // todo: batch these
-		    if (socket) {
-			socket.emit ('send:message', obj);
-		    }
-		    return result;
-		});
-	},
-	addGenericEvent: function (uri, obj, socket) {
+	sendEvent: function (uri, obj, socket) {
 	    return $http.post (uri, obj)
 		.then (function (result) {
 		    // todo: batch these
@@ -65,7 +34,9 @@ LASApp.factory ('dataService', function ($http) {
 		    return result;
 		});
 	},
-
+	/**
+	 * Query 
+	 */
 	query: function (uri, query) {
 	    return $http.post (uri, query)
 		.then (function (result) {

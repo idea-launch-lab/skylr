@@ -5,22 +5,28 @@
  * The event controller.
  */
 LASApp.controller ('analyticsController', function AnalyticsController ($scope, $log, dataService) {
-    $scope.storageChannels = [
-	/*
-	{
-	    name  : 'File',
-	    uri   : '/api/data/document/query',
-	    query : 'file-*' 
-	},
-	{
-	    name  : 'Document',
-	    uri   : '/api/data/document/query',
-	    query : '------TODO-------'
-	},
-*/
-	{
-	    name  : 'Kafka/Druid',
-	    uri   : '/api/data/druid/query',
+
+    // Controller data members
+    $scope.title = "Analytics";
+    $scope.storageChannels = dataService.getStorageChannels ();
+    $scope.storageChannel = $scope.storageChannels [2];
+    $scope.status = [ ];
+
+    // Execute query
+    $scope.query = function () {
+	var queryObj = $scope.queries [$scope.storageChannel.name];
+	var query = dataService.query (queryObj.uri, queryObj.query);
+	query.then (function (result) {
+	    console.log (result.data);
+	    $scope.status = result.data [0];
+	});
+    };
+    
+    // Queries by storage channel
+    $scope.queries = {
+	'Kafka/Druid' : {
+	    name  : 'OLAP - via Kafka/Druid',
+	    uri   : '/api/data/olap/query',
 	    query : {
 		"queryType"   : "groupBy",
 		"dataSource"  : "druidtest",
@@ -34,11 +40,5 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
 		"intervals": ["2010-01-01T00:00/2020-01-01T00"]
 	    }
 	}
-    ];
-    $scope.storageChannel = $scope.storageChannels [0];
-    $scope.status = [ ];
-    $scope.update = function () {
-	$scope.status = dataService.query ($scope.storageChannel.uri,
-					   $scope.storageChannel.query);
     };
 });

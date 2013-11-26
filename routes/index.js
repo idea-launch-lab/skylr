@@ -1,7 +1,7 @@
 var admin    = require ('./admin');
 var file     = require ('../routes/fs');
 var document = require ('../routes/document');
-var druid    = require ('../routes/druid');
+var olap     = require ('../routes/olap');
 var graph    = require ('../routes/graph');
 var messageQ = require ('../routes/messageQ');
 var socket   = require ('../routes/socket');
@@ -12,15 +12,14 @@ var socket   = require ('../routes/socket');
  */
 
 /**
- * Render the maing page.
+ * Render the main page.
  */
-exports.index = function (request, response){
-  response.render ('index',
-		   { title: 'LAS Event Service' });
+exports.index = function (request, response) {
+  response.render ('index', { title: 'LAS Event Service' });
 };
 exports.admin    = admin;
 exports.document = document;
-exports.druid    = druid;
+exports.olap     = olap;
 exports.file     = file;
 exports.graph    = graph;
 exports.messageQ = messageQ;

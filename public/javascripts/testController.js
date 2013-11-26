@@ -13,11 +13,7 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
     $scope.index = 0;
     $scope.category = 0;
     $scope.docDB = true;
-    $scope.storageChannels = [
-	{ name : 'File',     uri : '/api/data/file/add' },
-	{ name : 'Document', uri : '/api/data/document/add' },
-	{ name : 'Kafka',    uri : '/api/data/kafka/add' } 
-    ];
+    $scope.storageChannels = dataService.getStorageChannels ();
     $scope.storageChannel = $scope.storageChannels [0];
 
     /**
@@ -54,8 +50,9 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
      * Add a file.
      */
     $scope.sendMessage = function () {
-	var id = random (0, 1000000); //$scope.index++;
+	var id = random (0, 1000000);
 
+	// Categorize the message.
 	if (id % 8 == 0) {
 	    $scope.category = 3;
 	} else if (id % 6 == 0) {
@@ -67,27 +64,21 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
 	} else if (id % 3 == 0) {
 	    $scope.category = 1;
 	}
-	
+
+	// Build the message.
 	var message = {
 	    id       : id,
-	    code     : id,
+	    code     : random (id, id * 10000),
 	    name     : $scope.name,
 	    date     : new Date (),
-	    filename : [ 'file-', id ].join (''),
+	    filename : [ 'obj-', id ].join (''),
 	    content  : id
 	};
-
-	/**
-	if ($scope.docDB) {
-	    dataService.addEvent (message, socketService);
-	} else {
-	    dataService.addFile (message, socketService);
-	}
-	dataService.addBusEvent (message, socketService);
-	*/
-	dataService.addGenericEvent ($scope.storageChannel.uri,
-				     message,
-				     socketService);
+	
+	// Send an event.
+	dataService.sendEvent ($scope.storageChannel.uri,
+			       message,
+			       socketService);
     };
 
 });
