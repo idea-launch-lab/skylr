@@ -12,16 +12,15 @@ var logger = core.logging.getLogger ('doc-db');
  * This method expects the following arguments:
  *    (a) @param {content} The content of the document.
  */
-exports.add = function (request, response, sioClient) {
+exports.add = function (request, response) {
     var doc = { data : request.body.content };
-    logger.info ('--doc->write(): ' + core.util.inspect (doc));
     db.getEvents ().insert (doc, function (err, obj) {
 	if (err) {
 	    logger.error (err);
 	    response.end ();
 	    throw err;
 	} else {
-	    logger.info ('--doc-wrote: ' + core.util.inspect (obj));
+	    logger.info ('--doc-wrote: %j', obj);
 	    response.end (JSON.stringify (obj));
 	}
     });

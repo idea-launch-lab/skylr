@@ -174,16 +174,16 @@ a {
 
 
 /* --------------------------------------------------------------- */
-#docDB {
+#storageChannel {
     position : absolute;
     top      : 151px;
-    right    : 32px;
+    right    : 63px;
 }
-#docDBLabel {
+#storageChannelLabel {
     position : absolute;
     top      : 151px;
-    right    : 49px;
-}
+    right    : 158px;
+} 
 
 .testBlock {
     background-color : green;

@@ -52,7 +52,7 @@ LASApp.controller ('monitorController', function MonitorController ($scope,
 	    $scope.messagesByCategory [category] = 1;
 	}
     };
-
+ 
     // Put messages on the chart.
     $scope.chartMessages = function (time) {
 	for (var c = 0; c < $scope.latestMessages.length; c++) {

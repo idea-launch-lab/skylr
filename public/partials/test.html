@@ -2,8 +2,8 @@
   <div class="sectionHead">
     <h2>[[title]]</h2>
     <div class="button" ng-click="toggleMessageLoop ()">Begin Simulation</div>
-    <label id="docDBLabel" >Use Document Database</label>
-    <input id="docDB" type="checkbox" ng-model="docDB"></input>
+    <label id="storageChannelLabel">Channel</label>
+    <select id="storageChannel" ng-model="storageChannel" ng-options="c.name for c in storageChannels"></select>
   </div>
   <div>
     <div id="testBlock1" class="testBlock" ng-class="{ selectedTestBlock: 1 === category}">One</div>
@@ -13,3 +13,4 @@
     <div id="testBlock5" class="testBlock" ng-class="{ selectedTestBlock: 5 === category}">Five</div>
   </div>
 </div>
+ 

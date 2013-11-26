@@ -14,7 +14,7 @@ logger.info ('Initializing file storage adapter.');
  *    (a) @param {text} filename The name of the file to store.
  *    (b) @param {content} The file content must be multi-part encoded.
  */
-exports.add = function (request, response, sioClient) {
+exports.add = function (request, response) {
     request.assert ('filename', 'Filename required').notEmpty ().isAlpha ();
 
     var fileName = request.body.filename;
@@ -34,3 +34,4 @@ exports.add = function (request, response, sioClient) {
 	}
     });
 }
+ 

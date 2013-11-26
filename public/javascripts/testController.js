@@ -13,6 +13,12 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
     $scope.index = 0;
     $scope.category = 0;
     $scope.docDB = true;
+    $scope.storageChannels = [
+	{ name : 'File',     uri : '/api/data/file/add' },
+	{ name : 'Document', uri : '/api/data/document/add' },
+	{ name : 'Kafka',    uri : '/api/data/kafka/add' } 
+    ];
+    $scope.storageChannel = $scope.storageChannels [0];
 
     /**
      * Start the message loop.
@@ -31,7 +37,7 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
     $scope.stopMessageLoop = function () {
 	if ($scope.messageLoop != null) {
 	    clearInterval ($scope.messageLoop);
-	    $scope.messageLoop = null;
+	    $scope.messageLoop = null; 
 	}
     };
 
@@ -71,11 +77,17 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
 	    content  : id
 	};
 
+	/**
 	if ($scope.docDB) {
 	    dataService.addEvent (message, socketService);
 	} else {
 	    dataService.addFile (message, socketService);
 	}
+	dataService.addBusEvent (message, socketService);
+	*/
+	dataService.addGenericEvent ($scope.storageChannel.uri,
+				     message,
+				     socketService);
     };
 
 });

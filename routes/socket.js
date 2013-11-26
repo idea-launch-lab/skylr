@@ -8,8 +8,8 @@ module.exports = function (socket) {
 
     var name = "roger";
 
-    // send the new user their name and a list of users
-    console.log ("sending message db on init");
+    // send the new user their name and a list of users 
+    logger.debug ("sending message db on init");
     //socket.emit('init', messageDB);
 
     // notify other clients that a new user has joined
@@ -25,13 +25,13 @@ module.exports = function (socket) {
 
     // broadcast a user's message to other users
     socket.on('send:message', function (data) {
-	console.log ("--socket->broadcast(send:message) %j ", data);
+	logger.debug ("--socket->broadcast(send:message) %j ", data);
 	socket.broadcast.emit('send:message', data);
     });
 
     // broadcast a user's message to other users
     socket.on('send:message:buf', function (data) {
-	console.log ("--socket->broadcast(send:message:buf) %j ", data);
+	logger.debug ("--socket->broadcast(send:message:buf) %j ", data);
 	socket.broadcast.emit('send:message:buf', data);
     });
 
