@@ -1,11 +1,26 @@
 <div>
-    <div class="sectionHead">
-     <h2>[[title]]</h2>
-     <div class="button" ng-click="query()">Query</div>
-     <label id="storageChannelLabel">Channel</label>
-     <select id="storageChannel" ng-model="storageChannel" ng-options="c.name for c in storageChannels"></select>
-    </div>
-    <div class="sectionBody">
-       <p>[[status.event.imps]]</p>
-    </div>    
+  <div class="sectionHead" ng-init="initChart()">
+    <h2>[[title]]</h2>
+    <div class="button" ng-click="toggleChartUpdateLoop()">Query</div>
+    <label id="storageChannelLabel">Channel</label>
+    <select id="storageChannel" ng-model="storageChannel" ng-options="c.name for c in storageChannels"></select>
+  </div>
+<!--
+  <table cellpadding="5" cellspacing="0" border="0" style="width: 100%">
+    <tr style="font-weight:bold;font-size: 18px; border-bottom : 1px solid black;">
+      <td style="width:25%">X</td>
+      <td style="width:25%">Y</td>
+      <td style="width:25%">C1</td>
+      <td style="width:25%">C2</td>
+    </tr>
+    <tr ng-class="{ topApp : $first }" style="padding : 20px;">
+      <td style="width:25%">[[status.event.imps]]</td>
+      <td style="width:25%">[[status.event.rows]]</td>
+      <td style="width:25%">[[status.event.code]]</td>
+      <td style="width:25%">[[status.event.code2]]</td>
+    </tr>
+  </table>
+-->
+  <div id="chartContainer" style="height: 300px; width: 100%;">
+
 </div>

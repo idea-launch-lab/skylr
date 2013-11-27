@@ -68,7 +68,8 @@ LASApp.controller ('testController', function TestController ($scope, dataServic
 	// Build the message.
 	var message = {
 	    id       : id,
-	    code     : random (id, id * 10000),
+	    code     : random (id, id * 503),
+	    code2    : random (id, id * 790),
 	    name     : $scope.name,
 	    date     : new Date (),
 	    filename : [ 'obj-', id ].join (''),
