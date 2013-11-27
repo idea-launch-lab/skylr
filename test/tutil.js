@@ -17,25 +17,25 @@ var tutil = {
     rest     : rest,
     core     : core,
     conf     : {
-        embedded : false /*,
+        embedded : true,
         app : {
             host : 'localhost',
-            port : tutil.conf.app.port,
+            port : 3000, //tutil.conf.app.port,
             url  : null
         }
-*/
+/**/
     }
 };
 
 // URL to the app.
 tutil.conf.app = {};
-tutil.conf.app.url = 'http://localhost:' + tutil.core.config.port;
+tutil.conf.app.url = 'http://localhost:' + tutil.core.config.service.port;
 
 // Start the application.
 tutil.startApp = function () {
     if (tutil.conf.embedded) {
-        logger.info ("Starting application on port: " + tutil.conf.app.port);
-        server.listen (tutil.conf.app.port);
+        logger.info ("Starting application on port: " + tutil.core.config.service.port);
+        server.listen (tutil.core.config.service.port);
     }
 };
 

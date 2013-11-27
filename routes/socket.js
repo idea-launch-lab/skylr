@@ -13,7 +13,7 @@ module.exports = function (socket) {
     //socket.emit('init', messageDB);
 
     // notify other clients that a new user has joined
-    socket.broadcast.emit('user:join', {
+    socket.broadcast.emit ('user:join', {
 	name: name
     });
 

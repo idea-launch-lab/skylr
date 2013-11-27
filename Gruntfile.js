@@ -12,10 +12,10 @@ module.exports = function (grunt) {
 
         dox: {
             options: {
-                title: "Strummer Documentation"
+                title: "LAS Instrumentation Documentation"
             },
             files: {
-                src: [ 'mod', 'routes' ],
+                src: [ 'lib', 'routes', 'public/javascripts' ],
                 dest: 'docs'
             }
         },
@@ -32,7 +32,10 @@ module.exports = function (grunt) {
         uglify: {
             my_target: {
                 files: {
-                    'public/javascripts/app.min.js': [ 'public/javascripts/app.js' ]
+                    'public/javascripts/app.min.js': [
+			'public/javascripts/lib/*.js',
+			'public/javascripts/*.js'
+		    ]
                 }
             }
         }

@@ -28,16 +28,16 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
 	    name  : 'OLAP - via Kafka/Druid',
 	    uri   : '/api/data/olap/query',
 	    query : {
-		"queryType"   : "groupBy",
-		"dataSource"  : "druidtest",
-		"granularity" : "all",
-		"dimensions"  : [ ],
-		"aggregations": [
+		"queryType"    : "groupBy",
+		"dataSource"   : "druidtest",
+		"granularity"  : "all",
+		"dimensions"   : [ ],
+		"aggregations" : [
 		    { "type" : "count", "name": "rows" },
-		    { "type" : "longSum", "name": "imps", "fieldName": "impressions"},
-		    { "type" : "doubleSum", "name": "wp", "fieldName": "wp"}
+		    { "type" : "longSum", "name": "imps", "fieldName": "impressions" },
+		    { "type" : "doubleSum", "name": "wp", "fieldName": "wp" }
 		],
-		"intervals": ["2010-01-01T00:00/2020-01-01T00"]
+		"intervals": [ "2010-01-01T00:00/2020-01-01T00" ]
 	    }
 	}
     };
