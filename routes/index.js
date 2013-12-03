@@ -5,6 +5,7 @@ var olap     = require ('../routes/olap');
 var graph    = require ('../routes/graph');
 var messageQ = require ('../routes/messageQ');
 var socket   = require ('../routes/socket');
+var viz      = require ('../routes/visualization');
 
 /*
  * Collect all of the application's routes in one place.
@@ -17,10 +18,11 @@ var socket   = require ('../routes/socket');
 exports.index = function (request, response) {
   response.render ('index', { title: 'LAS Event Service' });
 };
-exports.admin    = admin;
-exports.document = document;
-exports.olap     = olap;
-exports.file     = file;
-exports.graph    = graph;
-exports.messageQ = messageQ;
-exports.socket   = socket;
+exports.admin         = admin;
+exports.document      = document;
+exports.olap          = olap;
+exports.file          = file;
+exports.graph         = graph;
+exports.messageQ      = messageQ;
+exports.socket        = socket;
+exports.visualization = viz;
