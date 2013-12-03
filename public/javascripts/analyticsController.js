@@ -17,7 +17,7 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
 	var queryObj = $scope.queries [$scope.storageChannel.name];
 	var query = dataService.query (queryObj.uri, queryObj.query);
 	query.then (function (result) {
-	    console.log (result.data);
+	    //console.log (result.data);
 	    $scope.status = result.data [0];
 	    if (callback) {
 		callback ($scope.status);
@@ -55,7 +55,7 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
     $scope.chart = null;
     $scope.initChart = function () {
 	// initial values of dataPoints
-	var totalMessages = "total people on campus: 0";
+	var totalMessages = "total messages: 0";
 
 	$scope.chart = new CanvasJS.Chart("chartContainer",{
 	    theme: "theme2",
@@ -85,6 +85,8 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
     };
 
     $scope.chartUpdateLoop = null;
+    $scope.startTime = null;
+    $scope.initialMessageCount = null;
 
     /**
      * Toggle the message loop's running state.
@@ -102,6 +104,8 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
     };
     $scope.startChartUpdateLoop = function () {
 	$scope.stopChartUpdateLoop ();
+	$scope.startTime = new Date ().getTime ();
+	$scope.totalMessages = null;
 
 	// update chart after specified interval
 	var updateInterval = 1000;  // milliseconds	
@@ -110,20 +114,31 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
 	}, updateInterval);
     };
     $scope.updateChart = function (state) {
-	var c = 0;
-	$scope.chartData [c++].y = state.event.imps;
-	$scope.chartData [c++].y = state.event.rows;
-	$scope.chartData [c++].y = state.event.code;
-	$scope.chartData [c++].y = state.event.code2;
-	
-	var sum = 0;
-	for (var c = 0; c < 4; c++) {
-	    sum += $scope.chartData [c].y;
+	if (state !== null && state !== undefined) {
+	    var c = 0;
+	    $scope.chartData [c++].y = state.event.imps;
+	    $scope.chartData [c++].y = state.event.rows;
+	    $scope.chartData [c++].y = state.event.code;
+	    $scope.chartData [c++].y = state.event.code2;
+	    
+	    var sum = state.event.rows;
+	    
+	    var currentTime = new Date ().getTime ();
+	    var rate = 0;
+	    if ($scope.initialMessageCount === null) {
+		$scope.initialMessageCount = sum;
+		$scope.startTime = currentTime;
+	    } else {
+		var elapsedTime = currentTime - $scope.startTime;
+		var newMessages = sum - $scope.initialMessageCount;
+		rate = Math.round (newMessages / (elapsedTime / 1000));
+	    }
+	    
+	    $scope.chart.options.data[0].legendText =
+		[ "total messages: ", sum, '; Throughput: ', rate, ' messages/second' ].join ('');
+	    
+	    $scope.chart.render();
 	}
-	
-	var totalMessages = "total messages: " + sum;
-	$scope.chart.options.data[0].legendText = totalMessages;
-	$scope.chart.render();
     };
 
 });
