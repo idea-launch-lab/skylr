@@ -5,22 +5,7 @@
     <label id="storageChannelLabel">Channel</label>
     <select id="storageChannel" ng-model="storageChannel" ng-options="c.name for c in storageChannels"></select>
   </div>
-<!--
-  <table cellpadding="5" cellspacing="0" border="0" style="width: 100%">
-    <tr style="font-weight:bold;font-size: 18px; border-bottom : 1px solid black;">
-      <td style="width:25%">X</td>
-      <td style="width:25%">Y</td>
-      <td style="width:25%">C1</td>
-      <td style="width:25%">C2</td>
-    </tr>
-    <tr ng-class="{ topApp : $first }" style="padding : 20px;">
-      <td style="width:25%">[[status.event.imps]]</td>
-      <td style="width:25%">[[status.event.rows]]</td>
-      <td style="width:25%">[[status.event.code]]</td>
-      <td style="width:25%">[[status.event.code2]]</td>
-    </tr>
-  </table>
--->
-  <div id="chartContainer" style="height: 300px; width: 100%;">
-
+  <img ng-show="chartUpdateLoop" id="busyIcon" src="/images/busy.gif"></img>
+  <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+  <a href="analytics/viz/sunburst">Sunburst</a>
 </div>

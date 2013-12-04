@@ -17,7 +17,7 @@ var tutil = {
     rest     : rest,
     core     : core,
     conf     : {
-        embedded : true,
+        embedded : false, //true,
         app : {
             host : 'localhost',
             port : 3000, //tutil.conf.app.port,

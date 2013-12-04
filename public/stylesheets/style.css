@@ -196,3 +196,11 @@ a {
 .selectedTestBlock {
     opacity          : 0.6;
  }
+
+#busyIcon {
+    right    : 99px;
+    top      : 69px;
+    width    : 25px;
+    height   : 25px;
+    position : absolute;
+}
