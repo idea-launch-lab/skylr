@@ -73,7 +73,7 @@ exports.addBinary = function (request, response) {
 	respond (response, 'ok', 200);
     } else {
 	var message = 'read ' + stat.size + ' of total posted ' + request.file.fileObj.size + ' bytes.';
-	respond (response, message, 200);
+	respond (response, message, 500);
 	logger.info ('size test failed on uploaded file.');
     }
 };
