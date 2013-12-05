@@ -5,6 +5,8 @@
 docs
 selenium
 #*#
+.#*
+*/*/#*#
 */#*#
 bower_components*
 public/components

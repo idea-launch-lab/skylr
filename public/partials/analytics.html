@@ -1,4 +1,4 @@
-<div>
+<div ng-init="buildTree()">
   <div class="sectionHead" ng-init="initChart()">
     <h2>[[title]]</h2>
     <div class="button" ng-click="toggleChartUpdateLoop()">Query</div>
@@ -8,4 +8,24 @@
   <img ng-show="chartUpdateLoop" id="busyIcon" src="/images/busy.gif"></img>
   <div id="chartContainer" style="height: 300px; width: 100%;"></div>
   <a href="analytics/viz/sunburst">Sunburst</a>
+  <div id="tree" style='width:500px;height:500px;'>
+<!--
+    <ul>
+      <li id="phtml_1">
+	<a href="#">Root node 1</a>
+	<ul>
+	  <li id="phtml_2">
+	    <a href="#">Child node 1</a>
+	  </li>
+	  <li id="phtml_3">
+	    <a href="#">Child node 2</a>
+	  </li>
+	</ul>
+      </li>
+      <li id="phtml_4">
+	<a href="#">Root node 2</a>
+      </li>
+    </ul>
+-->
+  </div>
 </div>
