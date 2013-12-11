@@ -30,11 +30,11 @@ To run Skylr (run each of these in a separate shell if in interactive mode):
 * skylr druid r start # realtime node.
 * skylr app start
 
-__skylr db start__ runs mongo.
-__skylr zk start__ runs a zookeeper node.
-__skylr kafka start__ runs an Apache Kafka server.
-__skylr druid r start__ runs a Metamarkets Druid Runtime server.
-__skylr app start__ runs node which connects to the above servers.
+* __skylr db start__ runs mongo.
+* __skylr zk start__ runs a zookeeper node.
+* __skylr kafka start__ runs an Apache Kafka server.
+* __skylr druid r start__ runs a Metamarkets Druid Runtime server.
+* __skylr app start__ runs node which connects to the above servers.
 
 Tests
 =====
