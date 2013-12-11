@@ -4,7 +4,7 @@
 /**
  * Admin controller - processes admin UI events.
  */
-LASApp.controller ('adminController', function AdminController ($scope, adminService) {
+LASApp.controller ('adminController', function ($scope, adminService) {
 
     // Controller data members.
     $scope.title = "Administration";
@@ -31,7 +31,7 @@ LASApp.controller ('adminController', function AdminController ($scope, adminSer
 	console.log (apps);
 	$scope.loadingIsDone = true;
     });
-    
+
     // Toggle display of fields to create a new app.
     $scope.newApp = function () {
 	if ($scope.newAppVisible) {

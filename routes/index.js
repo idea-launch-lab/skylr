@@ -1,9 +1,9 @@
 var admin    = require ('./admin');
 var file     = require ('../routes/fs');
 var document = require ('../routes/document');
-var olap     = require ('../routes/olap');
+var olap     = require ('../routes/olapRoute');
 var graph    = require ('../routes/graph');
-var messageQ = require ('../routes/messageQ');
+var messageQ = require ('../routes/message');
 var socket   = require ('../routes/socket');
 var viz      = require ('../routes/visualization');
 
