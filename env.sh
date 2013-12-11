@@ -2,15 +2,15 @@
 ##
 ## Copyright Renaissance Computing Institute (c) 2013
 ##
-## Configure and install LAS Instrumentation Services
+## Install, configure and run Skylr
 ##
 ########################################################################################
 
 # Configure basic directories.
-topdir=$PWD
-app=$topdir/app
-pub=$topdir/pub
-var=$topdir/var
+topdir=$SKYLR_HOME
+app=$SKYLR_APP
+pub=$app/pub
+var=$app/var
 
 # Make some if they're not there.
 mkdir -p $pub
@@ -40,12 +40,12 @@ fi
 
 
 # Set the default environment.
-export LAS_ENV=local
+export SKYLR_ENV=local
 
 # Set paths that will determine where we find stuff.
 
 # Linux
-las_setup_linux () {
+env_setup_linux () {
     # Node
     NODE_HOME=$app/node-v0.10.22-linux-x64
     export PATH=$NODE_HOME/bin:$PATH
@@ -60,7 +60,7 @@ las_setup_linux () {
 }
 
 # Mac OS - 
-las_setup_mac () {
+env_setup_mac () {
     # Node
     NODE_HOME=$app/node-v0.10.22-darwin-x64
     export PATH=$NODE_HOME/bin:$PATH
@@ -72,7 +72,7 @@ las_setup_mac () {
 }
 
 # Architecture independent
-las_setup_noarch () {
+env_setup_noarch () {
 
     # Kafka
     KAFKA_HOME=$app/kafka-0.7.2-incubating-bin
@@ -91,15 +91,15 @@ las_setup_noarch () {
 }
 
 # Configure paths and environment variables in an OS specific way
-las_setup () {
+env_setup () {
     if [ "x$os" == "xDarwin" ]; then
-	las_setup_mac
+	env_setup_mac
     else
-	las_setup_linux
+	env_setup_linux
     fi
-    las_setup_noarch
+    env_setup_noarch
 }
-las_setup
+env_setup
 
 ##=================================================================================
 ##== Installation Support
@@ -170,32 +170,32 @@ kill_app () {
 }
 
 # LAS control 
-function las () {
+function skylr () {
 
     # Print user help.
     help () {
 	echo ""
-	echo "LAS commands install and manage the server."
-	echo "   las show packages - List all packages to be installed."
-	echo "   las at local      - Configure a local development environment."
-	echo "   las at dev        - Configure a development integration server."
-	echo "   las at prod       - Configure a production system."
-	echo "   las install all   - Install all packages and the code."
-	echo "   las install clean - Delete all packages and code."
-	echo "   las db start      - Start the document store (mongodb)."
-	echo "   las db start      - Stop the document store."
-	echo "   las graph start   - Start the graph store (neo4j)."
-	echo "   las graph stop    - Stop the graph store (neo4j)."
-	echo "   las app start     - Start the server (node)."
-	echo "   las app stop      - Stop the server."
-	echo "   las app tests     - Run the automated tests."
+	echo "Skylr commands install and manage the server."
+	echo "   skylr show packages - List all packages to be installed."
+	echo "   skylr at local      - Configure a local development environment."
+	echo "   skylr at dev        - Configure a development integration server."
+	echo "   skylr at prod       - Configure a production system."
+	echo "   skylr install all   - Install all packages and the code."
+	echo "   skylr install clean - Delete all packages and code."
+	echo "   skylr db start      - Start the document store (mongodb)."
+	echo "   skylr db start      - Stop the document store."
+	echo "   skylr graph start   - Start the graph store (neo4j)."
+	echo "   skylr graph stop    - Stop the graph store (neo4j)."
+	echo "   skylr app start     - Start the server (node)."
+	echo "   skylr app stop      - Stop the server."
+	echo "   skylr app tests     - Run the automated tests."
 	echo ""
-	echo "   las zk start      - Start zookeeper."
-	echo "   las zk stop       - Stop zookeeper."
-	echo "   las kafka start   - Start kafka."
-	echo "   las kafka stop    - Stop kafka."
-	echo "   las druid r start - Start druid realtime node."
-	echo "   las druid r stop  - Stop druid realtime node."
+	echo "   skylr zk start      - Start zookeeper."
+	echo "   skylr zk stop       - Stop zookeeper."
+	echo "   skylr kafka start   - Start kafka."
+	echo "   skylr kafka stop    - Stop kafka."
+	echo "   skylr druid r start - Start druid realtime node."
+	echo "   skylr druid r stop  - Stop druid realtime node."
 	echo
     }
 
@@ -216,20 +216,15 @@ function las () {
 	    rm -rf $app/*
 	    rm -rf $pub/*
 	    rm -rf $var
-	    rm -rf $app/las-instr-fep
 	}
 
 	# Install the application.
 	app () {
 	    echo "--[install-app]"
-	    cd $app
-	    if [ ! -d las-instr-fep ]; then
-		git clone git@github.com:stevencox/las-instr-fep.git
-		cd las-instr-fep
-		mkdir data
-		npm install
-		bower install
-	    fi
+	    cd $topdir
+	    mkdir -p data
+	    npm install
+	    bower install
 	    cd $topdir
 	}
 
@@ -261,12 +256,12 @@ function las () {
 	    app
 	}
 	$*
-	las_setup
+	env_setup
     }
 
     # Refresh code from source control
     update () {
-	cd $app/las-instr-fep
+	cd $topdir
 	git pull
     }
 
@@ -305,7 +300,7 @@ function las () {
 
     # Environment configuration support.
     at () {
-	LAS_ENV=$1
+	SKYLR_ENV=$1
 
 	# Port settings for Neo4J are in a file. Mess with that when needed.
 	update_conf () {
@@ -366,8 +361,8 @@ function las () {
 
 	# Start the application
 	start () {
-	    cd $app/las-instr-fep
-	    NODE_ENV=$LAS_ENV node app.js
+	    cd $topdir
+	    NODE_ENV=$SKYLR_ENV node app.js
 	}
 
 	# Stop the application
@@ -378,12 +373,12 @@ function las () {
 
 	# Test the application
 	tests () {
-	    cd $app/las-instr-fep
-	    NODE_ENV=$LAS_ENV mocha --reporter spec --timeout 10000
+	    cd $topdir
+	    NODE_ENV=$SKYLR_ENV mocha --reporter spec --timeout 10000
 	    cd $topdir
 	}
 	demodata () {
-	    cd $app/las-instr-fep/public/data
+	    cd $topdir/public/data
 	    wget http://bl.ocks.org/kerryrodden/raw/7090426/821c980032ca798d5c21554cfcbf40946631e3b5/visit-sequences.csv
 	    cd $topdir
 	}
@@ -449,5 +444,5 @@ function las () {
     }
 }
 
-las at local
-las help
+skylr at local
+skylr help
