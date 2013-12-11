@@ -1,7 +1,7 @@
 Skylr
 ====================================================
 
-A network component for recording and visuzlizing unstructured events.
+A network component for recording and visualizing unstructured events.
 
 Installation
 ------------
@@ -9,15 +9,13 @@ Installation
 To install Skylr
 
 * git clone git@github.com:stevencox/skylr.git
-* export SKYLR_HOME=<path>/skylr
-* export SKYLR_APP=<path> # path where apps will be installed.
+* export SKYLR_HOME=/path/to/skylr
+* export SKYLR_APP=/path/to/skylr_stack # path where apps will be installed.
 * cd skylr
 * source env.sh
 * skylr install all
 
-This last line will download and install software dependencies. Everything is installed relative to the root directory.
-
-Always source env.sh to get the Skylr environment.
+This last line will download and install dependencies. Everything is installed relative to $SKYLR_APP.
 
 Running
 =======
