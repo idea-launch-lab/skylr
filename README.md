@@ -22,14 +22,7 @@ Running
 
 Skylr requires its storage engines to be running before the server starts.
 
-To run Skylr (run each of these in a separate shell if in interactive mode):
-
-* skylr db start
-* skylr zk start
-* skylr kafka start
-* skylr druid r start # realtime node.
-* skylr app start
-
+To run Skylr, run each of these in a separate shell (if in interactive mode):
 * __skylr db start__ runs mongo.
 * __skylr zk start__ runs a zookeeper node.
 * __skylr kafka start__ runs an Apache Kafka server.
