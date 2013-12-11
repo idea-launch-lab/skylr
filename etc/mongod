@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+# chkconfig: 35 90 12
+# description: A server
+#
+# Get function from functions library
+. /etc/init.d/functions
+
+LOG=/var/log/mongod.log
+SERVICE=mongod
+DATA=/var/las/data/mongodb
+APP="/opt/las/app/mongodb-linux-x86_64-2.4.8/bin/mongod --dbpath=$DATA"
+
+log_message () {
+    echo $* >> $LOG
+}
+
+# Start the service 
+start() {
+        log_message "echo -n Starting $SERVICE server: "
+        $APP &
+        ### Create the lock file ###
+        touch /var/lock/subsys/$SERVICE
+        success $"$SERVICE server startup"
+        echo
+}
+# Restart the service
+stop() {
+        log_message "echo -n Stopping $SERVICE server: "
+        killproc $SERVICE
+
+        ### Now, delete the lock file ###
+        rm -f /var/lock/subsys/$SERVICE
+        echo
+}
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status FOO
+        ;;
+  restart|reload|condrestart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+exit 0
