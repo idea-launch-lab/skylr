@@ -314,33 +314,33 @@ function skylr () {
 	}
 
 	# Set local environment.
-	local () {
+	set_local () {
 	    export NODE_PORT=3000
 	    export NODE_CLUSTERED=false
 	    export MONGO_PORT=27017
 	    export NEO4J_PORT=7474
 	    export NEO4J_ADMIN_PORT=7473	    
-	    update_conf
+	    #update_conf
 	}
 	# Set dev environment.
-	dev () {
+	set_dev () {
 	    export NODE_PORT=3001
 	    export NODE_CLUSTERED=false
 	    export MONGO_PORT=27018
 	    export NEO4J_PORT=7476
 	    export NEO4J_ADMIN_PORT=7475
-	    update_conf
+	    #update_conf
 	}
 	# Set production environment.
-	prod () {
+	set_prod () {
 	    export NODE_PORT=80
 	    export NODE_CLUSTERED=false
 	    export MONGO_PORT=27017
 	    export NEO4J_PORT=7474
 	    export NEO4J_ADMIN_PORT=7473
-	    update_conf
+	    #update_conf
 	}
-	$*
+	set_$*
     }
     
     # Selenium control.
