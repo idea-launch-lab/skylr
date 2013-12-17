@@ -1,9 +1,7 @@
 Skylr
-====================================================
+=====
 
 A network component for recording and visualizing unstructured events.
-* [Code Quality](http://scox.europa.renci.org:9000)
-* [Automated Build](http://scox.europa.renci.org:8080/jenkins/job/Skylr/)
 
 Installation
 ------------
@@ -20,7 +18,7 @@ To install Skylr
 This last line will download and install dependencies. Everything is installed relative to $SKYLR_APP.
 
 Running
-=======
+-------
 
 Skylr requires its storage engines to be running before the server starts.
 
@@ -32,19 +30,15 @@ To run Skylr, run each of these in a separate shell (if in interactive mode):
 * __skylr app start__ runs node which connects to the above servers.
 
 Tests
-=====
+-----
 
 To run Skylr tests
 
 * skylr app tests
 
+Continuous Integration
+----------------------
 
-
-
-
-
-
-
-
-
+* [Automated Build](http://scox.europa.renci.org:8080/jenkins/job/Skylr/)
+* [Code Quality](http://scox.europa.renci.org:9000)
 
