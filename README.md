@@ -2,6 +2,8 @@ Skylr
 ====================================================
 
 A network component for recording and visualizing unstructured events.
+* [Code Quality](http://scox.europa.renci.org:9000)
+* [Automated Build](http://scox.europa.renci.org:8080/jenkins/job/Skylr/)
 
 Installation
 ------------
