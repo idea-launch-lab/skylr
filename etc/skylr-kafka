@@ -1,0 +1,63 @@
+#!/bin/sh
+ 
+#
+# chkconfig: 2345 70 70
+# description: skylr-kafka
+#
+ 
+. /etc/rc.d/init.d/functions
+ 
+USER="scox"
+
+ROOT=/opt/las
+SERVICE=kafka
+LOG_FILE=/opt/las/var/kafka.log
+LOCK_FILE="/var/lock/subsys/$SERVICE-server"
+
+#set -x
+ 
+do_start () {
+    if [ ! -f "$LOCK_FILE" ] ; then
+        echo -n $"Starting $SERVICE: "
+	echo "-------------------------------> $SERVICE" >> /opt/las/kafka.log
+	runuser -l "$USER" -c "source $ROOT/setup.sh && skylr kafka start >> $LOG_FILE &" && echo_success || echo_failure
+    else
+        echo "$SERVER is locked ($LOCK_FILE)"
+        RETVAL=1
+    fi
+}
+do_status () {
+    if [[ "$(ps -ef | grep -v grep | grep -c kafka.Kafka)" -gt 0 ]]; then
+	echo $SERVICE is on
+    else
+	echo $SERVICE is off
+    fi
+}
+do_stop () {
+    echo -n $"Stopping $SERVICE: "
+    runuser -l "$USER" -c "source $ROOT/setup.sh && skylr kafka stop >> $LOG_FILE &" && echo_success || echo_failure
+
+#    ps -ef | egrep "kafka.Kafka" | grep -v grep | awk '{ print $2 }' 
+    ps -ef | egrep "kafka.Kafka" | grep -v grep | awk '{ print $2 }' | xargs kill -9
+    RETVAL=$?
+}
+case "$1" in
+        start)
+                do_start
+                ;;
+        status)
+                do_status
+                ;;
+        stop)
+                do_stop
+                ;;
+        restart)
+                do_stop
+                do_start
+                ;;
+        *)
+                echo "Usage: $0 {start|status|stop|restart}"
+                RETVAL=1
+esac
+ 
+exit $RETVAL
