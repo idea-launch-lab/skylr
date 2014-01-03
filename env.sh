@@ -408,19 +408,23 @@ function skylr () {
 	    $KAFKA_HOME/bin/zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties
 	}
 	stop () {
-	    kill_app org.apache.zookeeper.server.quorum
+	    echo stopping zookeeper...
+	    $KAFKA_HOME/bin/zookeeper-server-stop.sh
 	}
 	$*
     }
+
     kafka () {
 	start () {
 	    $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
 	}
 	stop () {
-	    $KAFKA_HOME/bin/kafka-server-start.sh
+	    echo hi
+	    $KAFKA_HOME/bin/kafka-server-stop.sh
 	}
 	$*
     }
+
     druid () {
 	r () {
 	    start () {

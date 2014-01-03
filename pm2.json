@@ -1,7 +1,7 @@
 [
     {
-	"name"       : "las-instrumentation-storage-api",
-	"script"     : "/opt/las/app/las-instr-fep/app.js",
+	"name"       : "skylr-storage-api",
+	"script"     : "/opt/las/skylr/app.js",
 	"instances"  : "3",
 	"error_file" : "/opt/las/var/storage_err.log",
 	"out_file"   : "/opt/las/var/storage_out.log",
