@@ -1,0 +1,1 @@
+for x in skylr-*; do echo $x; sudo chkconfig $x on; done
