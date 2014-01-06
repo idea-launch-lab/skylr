@@ -18,9 +18,10 @@ LOCK_FILE="/var/lock/subsys/$SERVICE-server"
  
 do_start () {
     if [ ! -f "$LOCK_FILE" ] ; then
+#	set -x
         echo -n $"Starting $SERVICE: "
-	echo "-------------------------------> $SERVICE" >> /opt/las/kafka.log
-	runuser -l "$USER" -c "source $ROOT/setup.sh && skylr kafka start >> $LOG_FILE &" && echo_success || echo_failure
+	echo "-------------------------------> $SERVICE" >> /opt/las/kafka.log	
+	runuser -l "$USER" -c "source $ROOT/setup.sh && skylr kafka start & >> $LOG_FILE" && echo_success || echo_failure
     else
         echo "$SERVER is locked ($LOCK_FILE)"
         RETVAL=1
@@ -35,10 +36,8 @@ do_status () {
 }
 do_stop () {
     echo -n $"Stopping $SERVICE: "
-    runuser -l "$USER" -c "source $ROOT/setup.sh && skylr kafka stop >> $LOG_FILE &" && echo_success || echo_failure
-
-#    ps -ef | egrep "kafka.Kafka" | grep -v grep | awk '{ print $2 }' 
-    ps -ef | egrep "kafka.Kafka" | grep -v grep | awk '{ print $2 }' | xargs kill -9
+    ps -ef | egrep "kafka.Kafka" | grep -v grep 
+    ps -ef | egrep "kafka.Kafka" | grep -v grep | awk '{ print $2 }' | xargs kill -SIGTERM
     RETVAL=$?
 }
 case "$1" in
