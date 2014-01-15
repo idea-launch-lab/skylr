@@ -1,15 +1,16 @@
 #!/bin/bash
 #
-# chkconfig: 35 90 12
+# chkconfig: 2345 60 80
 # description: A server
 #
 # Get function from functions library
 . /etc/init.d/functions
 
+user=skylr
 LOG=/var/log/mongod.log
 SERVICE=mongod
-DATA=/var/las/data/mongodb
-APP="/opt/las/app/mongodb-linux-x86_64-2.4.8/bin/mongod --dbpath=$DATA"
+DATA=/var/skylr/data/mongodb
+APP="/opt/app/skylr_app/mongodb-linux-x86_64-2.4.8/bin/mongod --dbpath=$DATA"
 
 log_message () {
     echo $* >> $LOG
@@ -18,18 +19,22 @@ log_message () {
 # Start the service 
 start() {
         log_message "echo -n Starting $SERVICE server: "
-        $APP &
-        ### Create the lock file ###
+	runuser $user -c "$APP &"
         touch /var/lock/subsys/$SERVICE
         success $"$SERVICE server startup"
         echo
 }
+status () {
+    if [[ "$(ps -ef | grep -v grep | grep dbpath | grep -c mongod)" -gt 0 ]]; then
+	echo $SERVICE is on
+    else
+	echo $SERVICE is off
+    fi
+}
 # Restart the service
 stop() {
         log_message "echo -n Stopping $SERVICE server: "
-        killproc $SERVICE
-
-        ### Now, delete the lock file ###
+	ps -ef | grep $SERVICE | grep -v grep | xargs kill -SIGTERM
         rm -f /var/lock/subsys/$SERVICE
         echo
 }
@@ -42,7 +47,7 @@ case "$1" in
         stop
         ;;
   status)
-        status FOO
+        status mongod
         ;;
   restart|reload|condrestart)
         stop
