@@ -7,21 +7,18 @@
  
 . /etc/rc.d/init.d/functions
  
-USER="scox"
-
-ROOT=/opt/las
+user="skylr"
+ROOT=/opt/app
 SERVICE=kafka
-LOG_FILE=/opt/las/var/kafka.log
+LOG_FILE=/var/skylr/kafka.log
 LOCK_FILE="/var/lock/subsys/$SERVICE-server"
 
 #set -x
  
 do_start () {
     if [ ! -f "$LOCK_FILE" ] ; then
-#	set -x
         echo -n $"Starting $SERVICE: "
-	echo "-------------------------------> $SERVICE" >> /opt/las/kafka.log	
-	runuser -l "$USER" -c "source $ROOT/setup.sh && skylr kafka start & >> $LOG_FILE" && echo_success || echo_failure
+	runuser -l "$user" -c "source $ROOT/setup.sh && skylr kafka start & >> $LOG_FILE" && echo_success || echo_failure
     else
         echo "$SERVER is locked ($LOCK_FILE)"
         RETVAL=1
@@ -36,7 +33,6 @@ do_status () {
 }
 do_stop () {
     echo -n $"Stopping $SERVICE: "
-    ps -ef | egrep "kafka.Kafka" | grep -v grep 
     ps -ef | egrep "kafka.Kafka" | grep -v grep | awk '{ print $2 }' | xargs kill -SIGTERM
     RETVAL=$?
 }

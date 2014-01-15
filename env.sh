@@ -124,7 +124,7 @@ add_noarch_package () {
 # Fetch and store a package.
 download_package () {
     cd $pub
-    wget --timestamping $1
+    wget --quiet --timestamping $1
 }
 
 # Unpack a fetched package.
@@ -184,8 +184,6 @@ function skylr () {
 	echo "   skylr install clean - Delete all packages and code."
 	echo "   skylr db start      - Start the document store (mongodb)."
 	echo "   skylr db start      - Stop the document store."
-	echo "   skylr graph start   - Start the graph store (neo4j)."
-	echo "   skylr graph stop    - Stop the graph store (neo4j)."
 	echo "   skylr app start     - Start the server (node)."
 	echo "   skylr app stop      - Stop the server."
 	echo "   skylr app tests     - Run the automated tests."
@@ -223,8 +221,8 @@ function skylr () {
 	    echo "--[install-app]"
 	    cd $topdir
 	    mkdir -p data
-	    npm install
-	    bower install
+	    #npm install
+	    #bower install
 	    cd $topdir
 	}
 
@@ -232,14 +230,36 @@ function skylr () {
 	all () {
 	    # Download packages.
 	    for p in $packages; do
-		echo downloading package: $p
 		download_package "$p"
 	    done
 	    cd $app
 	    # Unpack package contents.
 	    for p in $packages; do
 		echo installing package: $p
-		install_package "$p"
+
+		# Find out what the root directory of the tar file is.
+		# Check if that directory already exists
+		# Also handle jar files (which are stored compressed)
+		# Install iff it's not already installed
+		installed=false
+		archive=$( echo $p | xargs basename )
+		istar=false
+		if [[ $archive == *tar.gz* ]]; then istar=true; fi
+		if [[ $archive == *tgz* ]]; then istar=true; fi
+		if $istar; then
+		    dir=$( tar tf $pub/$archive | head -1 | sed -e "s,\/.*,," )		    
+		    if [ -d $dir ]; then
+			installed=true
+		    fi
+		elif [ -f $archive ]; then
+		    installed=true
+		fi
+
+		if $installed; then
+		    echo skipping installed package [$archive]. use clean to force reinstall.
+		else
+		    echo install_package "$p"
+		fi
 	    done
 	    cd $topdir
 
@@ -277,20 +297,6 @@ function skylr () {
 	}
 	stop () {
 	    pid=$(ps -ef | grep "port $MONGO_PORT" | grep -v grep | awk '{ print $2 }')
-	    if [ ! -z $pid ]; then
-		kill -9 $pid
-	    fi
-	}
-	$*
-    }
-
-    # Graph database control.
-    graph () {
-	start () {
-	    neo4j start
-	}
-	stop () {
-	    pid=$(ps -ef | grep $NEO4J_HOME | grep -v grep | awk '{ print $2 }')
 	    if [ ! -z $pid ]; then
 		kill -9 $pid
 	    fi
@@ -377,29 +383,6 @@ function skylr () {
 	    NODE_ENV=$SKYLR_ENV mocha --reporter spec --timeout 10000
 	    cd $topdir
 	}
-	demodata () {
-	    cd $topdir/public/data
-	    wget http://bl.ocks.org/kerryrodden/raw/7090426/821c980032ca798d5c21554cfcbf40946631e3b5/visit-sequences.csv
-	    cd $topdir
-	}
-	$*
-    }
-    $*
-
-    ramdisk () {
-	if is_mac; then
-	    create () {
-		size=$(( 2000 * 1024 * 2 ))
-		diskutil erasevolume HFS+ "ramdisk" $( hdiutil attach -nomount ram://$size )
-	    }
-	    remove () {
-		disk=$1
-		diskutil erasevolume HFS+ "ramdisk" $disk
-		diskutil unmount $disk
-		hdiutil detach -force $disk
-		sudo rm -rf $disk
-	    }
-	fi
 	$*
     }
 
@@ -446,7 +429,10 @@ function skylr () {
 	}
 	$*
     }
+
+    $*
+
 }
 
 skylr at local
-skylr help
+#skylr help

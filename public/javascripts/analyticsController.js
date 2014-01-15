@@ -143,7 +143,7 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
 
 
     $scope.buildTree = function () {
-	
+	/*
 	$(function () {
 	    // TO CREATE AN INSTANCE
 	    // select the tree container using jQuery
@@ -178,7 +178,7 @@ LASApp.controller ('analyticsController', function AnalyticsController ($scope, 
 	    });
 	    setTimeout(function () { $.jstree._reference("#phtml_1").open_node("#phtml_1"); }, 2500);
 	});
-
+*/
     };
 
 
