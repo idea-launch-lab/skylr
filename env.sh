@@ -221,8 +221,8 @@ function skylr () {
 	    echo "--[install-app]"
 	    cd $topdir
 	    mkdir -p data
-	    #npm install
-	    #bower install
+	    npm install
+	    bower install
 	    cd $topdir
 	}
 
