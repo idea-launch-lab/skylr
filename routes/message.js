@@ -15,8 +15,11 @@ var logger = core.logging.getLogger ('prozess->kafka');
  *    (a) @param {content} The content of the document.
  */
 exports.add = function (request, response, sioClient) {
-    var message = request.body;
-    message.utcdt = new Date ().toISOString ()
+    var message = {
+	data : request.body,
+	time : Date.now ()
+    };
+    logger.debug (message);
     producer.send (JSON.stringify (message), function (err) {
 	if (err) {
 	    logger.error (err);

@@ -13,7 +13,10 @@ var logger = core.logging.getLogger ('doc-db');
  *    (a) @param {content} The content of the document.
  */
 exports.add = function (request, response) {
-    var doc = { data : request.body.content };
+    var doc = {
+	data : request.body.content,
+	time : Date.now ()
+    };
     db.getEvents ().insert (doc, function (err, obj) {
 	if (err) {
 	    logger.error (err);
