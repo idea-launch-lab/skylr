@@ -5,7 +5,7 @@
   "scripts": {
     "posttest": "rm -rf public/javascripts/app.min.js && find . -name '*~' -print | xargs echo",
     "start": "node app.js",
-    "preinstall": "npm install -g grunt-cli bower mocha"
+    "preinstall": "npm --https_proxy=$http_proxy install -g grunt-cli bower mocha"
   },
   "dependencies": {
     "async": "0.2.9",
