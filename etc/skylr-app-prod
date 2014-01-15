@@ -1,0 +1,63 @@
+#!/bin/sh
+ 
+#
+# chkconfig: 2345 80 60
+# description: skylr-app
+#
+ 
+. /etc/rc.d/init.d/functions
+ 
+USER="skylr"
+
+source /opt/app/setup.sh
+
+SERVICE=node
+NODE_ENV=dev
+SERVER="$SKYLR_HOME/app.js"
+LOG_DIR=/var/skylr
+mkdir -p $LOG_DIR
+chown -R $USER $LOG_DIR
+LOG_FILE=$LOG_DIR/$(hostname)-app.log
+
+LOCK_FILE="/var/lock/subsys/node-server"
+ 
+do_start () {
+    if [ ! -f "$LOCK_FILE" ] ; then
+        echo -n $"Starting $SERVICE: "
+        runuser -l "$USER" -c ". /opt/app/setup.sh && cd $SKYLR_HOME && skylr app start >> $LOG_FILE &" && echo_success || echo_failure
+    else
+        echo "$SERVER is locked ($LOCK_FILE)"
+        RETVAL=1
+    fi
+}
+do_status () {
+    if [ "$( ps -ef | grep $SERVICE | grep -c app.js )" -gt 0 ]; then
+	echo $SERVICE is running
+    else
+	echo $SERVICE is not running
+    fi
+}
+do_stop () {
+    echo -n $"Stopping $SERVER: "
+    kill -9 $( ps -ef | grep node | grep app.js | awk '{ print $2 }' ) > /dev/null 2>&1 && echo_success || echo_failure
+}
+case "$1" in
+        start)
+                do_start
+                ;;
+        status)
+                do_status
+                ;;
+        stop)
+                do_stop
+                ;;
+        restart)
+                do_stop
+                do_start
+                ;;
+        *)
+                echo "Usage: $0 {start|status|stop|restart}"
+                RETVAL=1
+esac
+ 
+exit $RETVAL
