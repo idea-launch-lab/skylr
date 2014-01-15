@@ -221,8 +221,10 @@ function skylr () {
 	    echo "--[install-app]"
 	    cd $topdir
 	    mkdir -p data
-	    npm --https-proxy=$http_proxy install
-	    HTTPS_PROXY=$http_proxy bower install
+	    if [ ! -d node_modules ]; then
+		npm --https-proxy=$http_proxy install
+		HTTPS_PROXY=$http_proxy bower install
+	    fi
 	    cd $topdir
 	}
 
