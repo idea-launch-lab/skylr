@@ -160,7 +160,7 @@ fi
 # Same in all environments
 add_noarch_package selenium-server-standalone-2.37.0.jar
 add_noarch_package kafka-0.7.2-incubating-bin.tar.gz
-#add_noarch_package druid-services-0.5.58-bin.tar.gz
+add_noarch_package druid-services-0.5.58-bin.tar.gz
 
 kill_app () {
     pid=$(ps -ef | grep $1 | grep -v grep | awk '{ print $2 }')
