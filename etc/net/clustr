@@ -110,6 +110,11 @@ clustr () {
 	lb start
     }
 
+    restart () {
+	stop
+	start
+    }
+	
     $*
 }
  
