@@ -160,7 +160,7 @@ fi
 # Same in all environments
 add_noarch_package selenium-server-standalone-2.37.0.jar
 add_noarch_package kafka-0.7.2-incubating-bin.tar.gz
-add_noarch_package druid-services-0.5.58-bin.tar.gz
+#add_noarch_package druid-services-0.5.58-bin.tar.gz
 
 kill_app () {
     pid=$(ps -ef | grep $1 | grep -v grep | awk '{ print $2 }')
@@ -237,6 +237,7 @@ function skylr () {
 	    cd $app
 	    # Unpack package contents.
 	    for p in $packages; do
+
 		echo installing package: $p
 
 		# Find out what the root directory of the tar file is.
@@ -260,8 +261,9 @@ function skylr () {
 		if $installed; then
 		    echo skipping installed package [$archive]. use clean to force reinstall.
 		else
-		    echo install_package "$p"
+		    install_package "$p"
 		fi
+
 	    done
 	    cd $topdir
 
