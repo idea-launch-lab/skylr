@@ -1,0 +1,116 @@
+#!/bin/bash
+
+#set -x
+
+root=/opt/app
+appdir=$root/skylr
+confdir=$appdir/etc
+user=skylr
+var=/var/$user
+
+clustr () {
+
+    each0 () {
+	hosts=$1; shift
+	for host in $( cat $hosts ); do
+	    #echo ssh -t -o LogLevel=quiet $host "$*"
+	    echo "--$host:"
+	    ssh -t -o LogLevel=quiet $host "$*"
+	done
+    }
+
+    each () {
+	mask=$1; shift
+	for host in $( egrep "$mask" hosts.txt ); do
+	    echo "--$host:"
+	    ssh -t -o LogLevel=quiet $host "$*" | sed -e "s,^,    ,"
+	done
+    }
+    
+    install () {
+
+	# Configure environment (user, directories...)
+	each . "sudo id -u $user &>/dev/null || useradd -m -d /home/$user $user"
+	
+	each . "sudo mkdir -p $root"
+	each . "sudo chmod 777 $root"
+	each . "sudo chown $user $root"
+	
+	each . "sudo mkdir -p $var/data/mongodb"
+	each . "sudo chown -R $user $var"
+	
+	each . "sudo cp $confdir/setup.sh $root"
+	each . "sudo chown -R $user $root/setup.sh"
+	
+	# get source
+	each . "sudo su - skylr -c 'cd $root; if [ -d $appdir ]; then cd $appdir; git pull; echo pulled; else git clone https://github.com/stevencox/skylr.git; echo cloned; fi' "
+	
+	#install
+	each . "sudo su - $user -c 'source $root/setup.sh && skylr install all'"
+	
+	# mongo
+	each mongo "sudo cp $confdir/skylr-mongod /etc/init.d"
+	each mongo "sudo chkconfig skylr-mongod on"
+	
+	# zookeeper
+	
+	# kafka
+	each kafka "sudo cp $confdir/skylr-kafka /etc/init.d"
+	each kafka "sudo chkconfig skylr-kafka on"
+	
+	# app
+	each ^app "sudo cp $confdir/skylr-app-prod /etc/init.d"
+	each ^app "sudo chkconfig skylr-app-prod on"
+	
+	# load balancer
+	each ^skylr "sudo yum install -y nginx"
+	each ^skylr "sudo cp $confdir/nginx.conf /etc/nginx/"
+	each ^skylr "sudo chkconfig nginx on"
+	each ^skylr "sudo service nginx status"
+    }
+
+    service () {
+	each $1 "sudo service $2 $3"
+    }
+
+    lb () {
+	service ^skylr nginx $1
+    }
+
+    app () {
+	service app skylr-app-prod $1
+    }
+
+    mongo () {
+	service mongo skylr-mongod $1
+    }
+
+    kafka () {
+	service kafka skylr-kafka $1
+    }
+
+    status () {
+	mongo status
+	kafka status
+	app status
+	lb status
+    }
+    
+    stop () {
+	lb stop
+	app stop
+	kafka stop
+	mongo stop
+    }
+
+    start () {
+	mongo start
+	kafka start
+	app start
+	lb start
+    }
+
+    $*
+}
+ 
+
