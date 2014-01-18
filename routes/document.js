@@ -25,3 +25,21 @@ exports.add = function (request, response) {
 	}
     });
 };
+
+
+/**
+ * Add an object to query data store.
+ * @param {HTTPRequest} request An HTTP request object.
+ * @param {HTTPResponse} response An HTTP response object.
+ * @return {HTTPStatusCode} Returns an HTTP status code: 200 for success, 400 on error.
+ *
+ * This method expects the following arguments:
+ *    (a) @param {content} The Mongo query.
+ */
+//@@
+
+exports.queryMongo = function (request, response) {
+    var doc = { data : request.body.content };
+    logger.info('--database-name: %s', db.getName());
+};
+
