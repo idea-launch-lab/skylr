@@ -38,8 +38,9 @@ exports.add = function (request, response) {
  */
 //@@
 
-exports.queryMongo = function (request, response) {
+exports.query = function (request, response) {
     var doc = { data : request.body.content };
-    logger.info('--database-name: %s', db.getName());
+    logger.info('--database-name');
+    response.end (JSON.stringify ({'msg':'query end.'}));
 };
 
