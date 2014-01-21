@@ -375,6 +375,11 @@ function skylr () {
 	    NODE_ENV=$SKYLR_ENV node app.js
 	}
 
+	supervise () {
+	    cd $topdir
+	    NODE_ENV=$SKYLR_ENV supervisor app.js
+	}
+
 	# Stop the application
 	stop () {
 	    pid=$(ps -ef | grep $NODE_HOME | grep -v grep | awk '{ print $2 }')
