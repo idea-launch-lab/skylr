@@ -24,7 +24,7 @@ LOCK_FILE="/var/lock/subsys/node-server"
 do_start () {
     if [ ! -f "$LOCK_FILE" ] ; then
         echo -n $"Starting $SERVICE: "
-        runuser -l "$USER" -c ". /opt/app/setup.sh && cd $SKYLR_HOME && skylr app start >> $LOG_FILE &" && echo_success || echo_failure
+        runuser -l "$USER" -c ". /opt/app/setup.sh && cd $SKYLR_HOME && skylr app supervise >> $LOG_FILE &" && echo_success || echo_failure
     else
         echo "$SERVER is locked ($LOCK_FILE)"
         RETVAL=1

@@ -1,11 +1,11 @@
 {
-  "name": "las-instr-fep",
+  "name": "Skylr",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "posttest": "rm -rf public/javascripts/app.min.js && find . -name '*~' -print | xargs echo",
     "start": "node app.js",
-    "preinstall": "npm --https_proxy=$http_proxy install -g grunt-cli bower mocha"
+    "preinstall": "npm --https_proxy=$http_proxy install -g grunt-cli bower mocha supervisor"
   },
   "dependencies": {
     "async": "0.2.9",
