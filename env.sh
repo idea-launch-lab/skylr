@@ -377,7 +377,7 @@ function skylr () {
 
 	supervise () {
 	    cd $topdir
-	    NODE_ENV=$SKYLR_ENV supervisor app.js
+	    NODE_ENV=$SKYLR_ENV forever app.js
 	}
 
 	# Stop the application
